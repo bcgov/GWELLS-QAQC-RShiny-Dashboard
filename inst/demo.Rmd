@@ -1,0 +1,379 @@
+---
+title: "gwells"
+output: html_document
+#  flexdashboard::flex_dashboard:
+#    orientation: rows
+#    vertical_layout: fill
+#    logo: images/logo.svg
+#    favicon: www/favicon.ico
+#    css: css/style.css
+#    resize_reload: false
+#    theme:
+#      version: 4
+#      bootswatch: yeti
+#      primary: "#003366"
+#runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE, context = "setup"}
+suppressPackageStartupMessages({
+  library(gwellsshiny)
+  library(bcmaps)
+  library(bcdata)
+  library(shiny)
+  library(leaflet)
+  library(DT)
+  library(RPostgres)
+  library(plotly)
+  library(pool)
+  library(DBI)
+  library(sf)
+  library(mapview)
+  library(dplyr)
+  library(stringr)
+  library(forcats)
+  library(hrbrthemes)
+  library(plotly)
+  library(tidyr)
+  library(gt)
+  library(glue)
+})
+
+hrbrthemes::import_roboto_condensed()
+ggplot2::theme_set(hrbrthemes::theme_ipsum_rc()) # this ggplot2 theme uses roboto condensed font, which works well with the font used for the whole document.
+options(ggplot2.discrete.fill  = function() scale_fill_brewer(type = "qual", palette = "Set3")) # these scales are colorbliend friendly and start with "cooperators blue"
+options(ggplot2.continuous.fill  = function() scale_fill_viridis_c())
+options(ggplot2.discrete.colour = function() scale_color_brewer(type = "qual", palette = "Set3"))
+options(ggplot2.continuous.colour = function() scale_color_viridis_c())
+
+start_date <- "2021-12-13"
+end_date <- "2021-12-17"
+
+```
+
+```{r start, include=FALSE, context = "server-start"}
+# pool <- dbPool(
+#   drv = RPostgres::Postgres(),
+#   dbname = Sys.getenv("BCGOV_DB"),
+#   host = Sys.getenv("BCGOV_HOST"),
+#   port = 5432, 
+#   user = Sys.getenv("BCGOV_USR"),
+#   password = Sys.getenv("BCGOV_PWD")
+# )
+# onStop(function() {
+#   poolClose(pool)
+# })
+```
+
+
+```{r}
+con1 <- DBI::dbConnect(
+  #RPostgreSQL::PostgreSQL(),
+  RPostgres::Postgres(),
+  dbname = Sys.getenv("BCGOV_DB"),
+  host = Sys.getenv("BCGOV_HOST"),
+  user = Sys.getenv("BCGOV_USR"),
+  password=Sys.getenv("BCGOV_PWD")
+)
+
+```
+
+
+TEST 
+=====================================
+
+
+```{r}
+
+qa <- dbGetQuery(con1, "select * from wells_qa ") # where well_tag_number > 124000
+geocode <- dbGetQuery(con1, "select * from wells_geocoded ") # where well_tag_number > 124000
+wells <- dbGetQuery(con1, "select * from wells") #  where well_tag_number > 124000
+drilling_method <- dbGetQuery(con1, "select well_tag_number,drilling_method_code  from drilling_method  ")  #where well_tag_number > 124000 
+
+drilling_method_summary <- drilling_method %>%
+  group_by(well_tag_number) %>% 
+  summarise(
+    
+    has_air_rotary = max(str_detect(toupper(drilling_method_code), "AIR_ROTARY")),
+    has_auger = max(str_detect(toupper(drilling_method_code), "AUGER")),
+    has_cable_tool = max(str_detect(toupper(drilling_method_code), "CABLE_TOOL")),
+    has_driving = max(str_detect(toupper(drilling_method_code), "DRIVING")),
+    has_dugout = max(str_detect(toupper(drilling_method_code), "DUGOUT")),
+    has_duo_rotary = max(str_detect(toupper(drilling_method_code), "DUO_ROTARY")),
+    has_excavating = max(str_detect(toupper(drilling_method_code), "EXCAVATING")),
+    has_jetting = max(str_detect(toupper(drilling_method_code), "JETTING")),
+    has_mud_rotary = max(str_detect(toupper(drilling_method_code), "MUD_ROTARY")),
+    has_other = max(str_detect(toupper(drilling_method_code), "OTHER")),
+    has_unk = max(str_detect(toupper(drilling_method_code), "UNK"))
+    
+  )
+
+colnames_in_more_than_one_db <- c("identification_plate_number", "well_identification_plate_attached", "well_status_code", "well_class_code", "well_subclass", "licenced_status_code", "intended_water_use_code", "observation_well_number", "obs_well_status_code", "water_supply_system_name", "water_supply_system_well_name", "street_address", "city", "legal_lot", "legal_plan", "legal_district_lot", "legal_block", "legal_section", "legal_township", "legal_range", "land_district_code", "legal_pid", "well_location_description", "latitude_decdeg", "longitude_decdeg", "utm_zone_code", "utm_northing", "utm_easting", "coordinate_acquisition_code", "construction_start_date", "construction_end_date", "alteration_start_date", "alteration_end_date", "decommission_start_date", "decommission_end_date", "driller_name", "consultant_name", "consultant_company", "diameter_inches", "total_depth_drilled_ft_bgl", "finished_well_depth_ft_bgl", "final_casing_stick_up_inches", "bedrock_depth_ft_bgl", "ground_elevation_ft_asl", "ground_elevation_method_code", "static_water_level_ft_btoc", "well_yield_usgpm", "well_yield_unit_code", "artesian_flow_usgpm", "artesian_pressure_psi", "well_cap_type", "well_disinfected_code", "well_orientation_code", "alternative_specs_submitted", "surface_seal_material_code", "surface_seal_method_code", "surface_seal_depth_ft", "backfill_type", "backfill_depth_ft", "liner_material_code", "liner_diameter_inches", "liner_thickness_inches", "surface_seal_thickness_inches", "liner_from_ft_bgl", "liner_to_ft_bgl", "screen_intake_method_code", "screen_type_code", "screen_material_code", "other_screen_material", "screen_information", "screen_opening_code", "screen_bottom_code", "other_screen_bottom", "filter_pack_from_ft", "filter_pack_to_ft", "filter_pack_material_code", "filter_pack_thickness_inches", "filter_pack_material_size_code", "development_hours", "development_notes", "water_quality_colour", "water_quality_odour", "yield_estimation_method_code", "yield_estimation_rate_usgpm", "yield_estimation_duration_hours", "static_level_before_test_ft_btoc", "drawdown_ft_btoc", "hydro_fracturing_performed", "hydro_fracturing_yield_increase", "decommission_reason", "decommission_method_code", "decommission_details", "decommission_sealant_material", "decommission_backfill_material", "comments", "ems", "person_responsible", "company_of_person_responsible", "aquifer_id", "avi_years", "storativity", "transmissivity_m_2_s", "hydraulic_conductivity_m_s", "specific_storage_1_m", "specific_yield", "testing_method", "testing_duration_hours", "analytic_solution_type", "boundary_effect_code", "aquifer_lithology_code", "artesian_pressure_head_ft_agl", "artesian_conditions", "full_address", "civic_number", "civic_number_suffix", "street_name", "street_type", "is_street_type_prefix", "street_direction", "is_street_direction_prefix", "street_qualifier", "locality_name")
+
+
+full_data <- wells %>% 
+  left_join(geocode) %>% 
+  left_join(qa %>% select(-all_of(colnames_in_more_than_one_db)))  %>%
+  left_join(drilling_method_summary) %>%
+  filter(date_added >= start_date, date_added <= end_date)
+
+```
+
+```{r}
+interesting_columns <- c("well_tag_number", "identification_plate_number", 
+                         "date_added", "date_geocoded", "date_qa",
+                         "construction_start_date", "construction_end_date",    
+                         "decommission_start_date", "decommission_end_date", 
+                         "alteration_start_date", "alteration_end_date",
+                         "longitude_decdeg", "latitude_decdeg", 
+                         "well_class_code", "well_subclass",
+                         "intended_water_use_code",
+                         "finished_well_depth_ft_bgl" , "person_responsible", "company_of_person_responsible",
+                         "artesian_conditions", "comments",
+                         "nr_region_name")
+```
+
+```{r, create_variables_for_tables}
+z <- full_data %>%
+  mutate(
+    cross_referenced = replace_na(stringr::str_detect(comments, "xref|x-ref|cross ref|cross-ref"), FALSE),
+    
+    max_date = pmax(coalesce(construction_start_date, construction_end_date, alteration_start_date, alteration_end_date, decommission_start_date, decommission_end_date)),
+    worktype = factor(case_when(
+      decommission_start_date == max_date | decommission_end_date == max_date ~ "decommission",
+      alteration_start_date == max_date | alteration_end_date == max_date ~ "alteration",
+      construction_start_date == max_date | construction_end_date == max_date ~ "construction",
+      TRUE ~ "no date"
+      
+      
+      ), levels = c("construction", "alteration", "decommission", "no date")
+      ),
+    old_or_unknown_date = max_date < lubridate::ymd("20160301") | is.na(max_date), 
+    
+    my_well_type = case_when(
+      artesian_conditions == "True" ~ "artesian",
+      well_class_code == "WATR_SPPLY" ~ "water supply",
+      well_class_code == "RECHARGE" ~ "recharge",
+      well_class_code == "INJECTION" ~ "injection",
+      well_class_code == "DEW_DRA" ~ "dewatering/discharge",
+      well_class_code == "CLS_LP_GEO" ~ "closed loop geo",
+      TRUE ~ NA_character_
+    ),
+    table1_missing_lat_long_flag =  case_when(
+      is.na(my_well_type) | old_or_unknown_date ~ FALSE,
+      is.na(latitude_decdeg) | is.na(longitude_decdeg) ~ TRUE,
+      !is.na(latitude_decdeg) | is.na(longitude_decdeg) ~ FALSE
+    ),
+    table1_table1_missing__wdip_flag =  case_when(
+      is.na(my_well_type) | old_or_unknown_date ~ FALSE,
+      is.na(well_identification_plate_attached)  ~ TRUE,
+      !is.na(well_identification_plate_attached)  ~ FALSE
+    ),
+    table1_missing_finished_well_depth_flag =  case_when(
+      is.na(my_well_type) | old_or_unknown_date ~ FALSE,
+      is.na(finished_well_depth_ft_bgl)  ~ TRUE,
+      !is.na(finished_well_depth_ft_bgl)  ~ FALSE
+    ),
+    table1_missing_person_responsible_flag =  case_when(
+      is.na(my_well_type) | old_or_unknown_date ~ FALSE,
+      is.na(person_responsible)  ~ TRUE,
+      !is.na(person_responsible)  ~ FALSE
+    ),
+    
+    table1_flag = table1_missing_lat_long_flag + table1_table1_missing__wdip_flag + table1_missing_finished_well_depth_flag + table1_missing_person_responsible_flag,
+    
+    table2_flag = case_when(
+      distance_to_matching_pid >400 ~ TRUE,
+      0< score_address & score_address < 80 ~ TRUE,
+      0 <score_city ~ TRUE,
+      TRUE ~ FALSE
+    ),
+    table3_missing_lat_long_flag =  case_when(
+      is.na(my_well_type) | !old_or_unknown_date ~ FALSE,
+      is.na(latitude_decdeg) | is.na(longitude_decdeg) ~ TRUE,
+      !is.na(latitude_decdeg) | is.na(longitude_decdeg) ~ FALSE
+    ),
+    table3_missing_finished_well_depth_flag =  case_when(
+      is.na(my_well_type) | !old_or_unknown_date ~ FALSE,
+      is.na(finished_well_depth_ft_bgl)  ~ TRUE,
+      !is.na(finished_well_depth_ft_bgl)  ~ FALSE
+    ),
+    table3_flag =  table3_missing_lat_long_flag+ table3_missing_finished_well_depth_flag,
+    my_intended_water_use =
+      factor(if_else(well_class_code == "WATR_SPPLY", intended_water_use_code, "SPECIALIZED"), 
+             levels = c("DOM", "UNK","DWS","COM","IRR","OTHER","TST","OBS","OP_LP_GEO", "SPECIALIZED")
+      )
+    
+  )%>%
+  mutate(
+    fct_well_class_code = factor(well_class_code, levels = c("WATR_SPPLY", "UNK", "MONITOR", "DEW_DRA", "CLS_LP_GEO" ,"GEOTECH" ,"REMEDIATE" ,"INJECTION", "RECHARGE"))
+  )
+```
+
+### Table 1 
+```{r}
+table1 <- z %>% filter(table1_flag >0 ) %>% arrange(desc(table1_flag), desc(well_tag_number)) %>%
+  select(well_tag_number,table1_flag,  my_well_type, table1_missing_lat_long_flag, table1_table1_missing__wdip_flag, table1_missing_finished_well_depth_flag, table1_missing_person_responsible_flag, company_of_person_responsible) 
+
+table1 %>%
+  datatable(caption =glue("table 1, from {start_date} to {end_date}"))
+```
+
+### Table 2  
+```{r}
+table2 <-  z %>% filter(table2_flag) %>% 
+  arrange(desc(score_address), desc(well_tag_number)) %>%
+  select(well_tag_number, distance_to_matching_pid, score_address, score_location_description, score_city, worktype, company_of_person_responsible)
+
+table2 %>%
+  tail(1000) %>% 
+  datatable(caption =glue("table 2, from {start_date} to {end_date} (showing only last 1000 records)"))
+```
+
+
+### Table 3    
+
+```{r}
+table3 <- z %>% filter(table3_flag >0 ) %>% arrange(desc(table3_flag), desc(well_tag_number)) %>%
+  select(well_tag_number,table3_flag,  my_well_type, table3_missing_lat_long_flag,table3_missing_finished_well_depth_flag,  company_of_person_responsible) 
+
+table3 %>%
+  datatable(caption =glue("table 3, from {start_date} to {end_date}"))
+```
+### Figure 1   
+
+```{r}
+z %>% 
+  count(fct_well_class_code, my_intended_water_use) %>%
+  ggplot()+
+  geom_col(aes(x=fct_well_class_code, y= n, fill = forcats::fct_rev(my_intended_water_use)))+ 
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) + 
+  labs(
+    title = "Figure 1 - Intended Use by Well Class Code",
+    subtitle = glue("from {start_date} to {end_date}"),
+    x= "Well Class Code",
+    y = "Count",
+    fill = "Intended Use"
+  )
+```
+
+
+
+### Figure 2 (map)    
+
+```{r}
+
+#bc_landmass <- bcmaps::bc_neighbours(ask = FALSE) %>% filter(name == "British Columbia") %>%
+bc_landmass <- bcmaps::bc_bound(ask = FALSE) %>% 
+  mutate(dummy = 1) %>%
+  group_by(dummy) %>%
+  summarise(dummy2 = 1)
+
+regions_landmass <- nr_regions(ask=FALSE) %>% st_intersection(bc_landmass)
+
+mymap <- ggplot() +
+  #geom_sf(data = bcmaps::bc_neighbours(ask = FALSE))+ 
+  geom_sf(data = regions_landmass %>% st_cast("MULTIPOLYGON"), fill = NA) +
+  
+  # geom_sf(data = z %>% 
+  #           filter(!is.na(longitude_decdeg), !is.na(latitude_decdeg)) %>% 
+  #           st_as_sf(coords= c("longitude_decdeg", "latitude_decdeg"), crs = 4326, remove = FALSE)  %>%
+  #           tail(1000),
+  #         color = "white",
+  #         size = 1
+  # )+ 
+  geom_sf(data = z %>%
+            filter(!is.na(longitude_decdeg), !is.na(latitude_decdeg)) %>%
+            st_as_sf(coords= c("longitude_decdeg", "latitude_decdeg"), crs = 4326, remove = FALSE)  %>%
+            tail(1000),
+          aes(color = well_class_code, text = paste0("well_tag_number: ",well_tag_number, ", well_class_code:", well_class_code, ", date_added to gwells:", date_added)),
+          size = 1, shape  = 1
+  ) +
+  labs(
+    title = glue("Figure 2: Map of New Wells from {start_date} to {end_date} (last 1000 wells)"),
+    subtitle = "We may have to go non-interactive in the shiny if this takes too long to render"
+    ) +
+  theme_void() + 
+  theme(legend.position = c(0.85, 0.7)) 
+
+ggplotly(mymap, tooltip  ="text")
+```
+
+### Summary Table 1 
+```{r}
+
+region_intended_use_counts <-
+  z %>% 
+  group_by(nr_region_name) %>%
+  count(my_intended_water_use) %>%
+  spread(key=my_intended_water_use, value = n, fill = 0)
+
+
+z %>% 
+  group_by(nr_region_name) %>%
+  summarise(
+    Total = n()
+  ) %>% 
+  left_join(region_intended_use_counts)%>% 
+  gt(rowname_col = "nr_region_name") %>%
+  tab_header(
+    title = "Summary Table 1 - Count of intended use code by region ",
+    subtitle = glue("{start_date} to {end_date}")
+  ) %>%
+  fmt_number(columns = everything(), decimals = 0) %>% 
+  summary_rows(
+   # columns = is.numeric(),
+    fns = list(Total = "sum"),
+    decimals = 0
+  )
+```
+### Summary Table 2   
+```{r}
+
+
+z %>% 
+  group_by(nr_region_name) %>%
+  count(fct_well_class_code) %>%
+  spread(key=fct_well_class_code, value = n, fill = 0) %>%  
+  ungroup() %>% 
+  left_join (z %>% count(nr_region_name)) %>%
+  rename(Total = "n") %>% 
+  gt(rowname_col = "nr_region_name") %>%
+  tab_header(
+    title = "Summary Table 2 - Count of well_class_code by region",
+    subtitle = glue("{start_date} to {end_date}")
+  ) %>%
+  fmt_number(columns = everything(), decimals = 0) %>% 
+  summary_rows(
+   # columns = is.numeric(),
+    fns = list(Total = "sum"),
+    decimals = 0
+  )
+```
+### Summary Table 3  
+```{r}
+
+z %>% 
+  group_by(nr_region_name)  %>%
+  summarise(Total = n(),
+            before_feb2016_or_unknown_date = sum(old_or_unknown_date),
+            after_feb2016 = sum(!old_or_unknown_date),
+            cross_referenced = sum(cross_referenced == TRUE),
+            artesian = sum(artesian_conditions == "True"),
+            in_table1 = sum(table1_flag>0),
+            in_table2 = sum(table2_flag),
+            in_table3 = sum(table3_flag>0)
+            )  %>% 
+  gt(rowname_col = "nr_region_name") %>%
+  tab_header(
+    title = "Summary Table 3 - Count of 'interesting' wells by region",
+    subtitle = glue("{start_date} to {end_date}")
+  ) %>%
+  fmt_number(columns = everything(), decimals = 0) %>% 
+  summary_rows(
+   # columns = is.numeric(),
+    fns = list(Total = "sum"),
+    decimals = 0
+  )
+```
+
