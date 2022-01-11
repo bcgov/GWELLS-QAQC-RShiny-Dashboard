@@ -28,7 +28,11 @@ devtools::build()
 ## RStudio ----
 ## If you want to deploy on RStudio related platforms
 #golem::add_rstudioconnect_file()
+
+
 golem::add_shinyappsio_file()
+
+
 #golem::add_shinyserver_file()
 
 ## Docker ----
@@ -42,5 +46,8 @@ golem::add_shinyappsio_file()
 #golem::add_dockerfile_heroku()
 
 
-# ajouté par moi
-rsconnect::deployApp()
+# ajouté par simon coulombe
+rsconnect::setAccountInfo(name='bcgov-env',
+                          token='CBFC2CC49A93E5F6FE27B7CD107BFE29',
+                          secret='SECRET')
+rsconnect::deployApp(account = "bcgov-env")

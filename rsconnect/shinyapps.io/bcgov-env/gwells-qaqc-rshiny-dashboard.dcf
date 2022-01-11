@@ -1,0 +1,11 @@
+name: gwells-qaqc-rshiny-dashboard
+title:
+username:
+account: bcgov-env
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5420946
+bundleId: 5454316
+url: https://bcgov-env.shinyapps.io/gwells-qaqc-rshiny-dashboard/
+when: 1641868265.91554
+lastSyncTime: 1641868265.91556
