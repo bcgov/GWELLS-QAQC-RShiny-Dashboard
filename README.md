@@ -5,7 +5,7 @@ An R Shiny dashboard that automates filtering and prioritizing wells within the 
 
 # Process map    
 
-
+![](inst/app/www/images/gwells.drawio.png)
 
 # BC Shiny Template  
 
