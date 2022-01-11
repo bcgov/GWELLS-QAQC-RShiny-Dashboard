@@ -52,7 +52,9 @@ mod_filterDataInputGenerate_ui <- function(id){
   ns <- NS(id)
   actionButton(
     inputId = ns("generate"), 
-    label = "Generate tables and figures")
+    label = "Generate tables and figures",
+    icon = icon("paper-plane"),
+    style="color:#fff;background-color: #00ab66")
 }
 
 #' filterDataInput Server Functions

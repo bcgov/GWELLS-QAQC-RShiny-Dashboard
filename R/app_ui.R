@@ -17,9 +17,10 @@ app_ui <- function(request) {
               .glyphicon-exclamation-sign {color:#e5413b}
               .glyphicon-flag, .glyphicon-trash {color:#28b728}"),
       fluidRow(
+        column(4, mod_filterDataInputGenerate_ui("filterDataInput_ui_1")),
         column(4, mod_filterDataInputWTN_ui("filterDataInput_ui_1")),
-        column(4, mod_filterDataInputDate_ui("filterDataInput_ui_1")),
-        column(4, mod_filterDataInputGenerate_ui("filterDataInput_ui_1"))
+        column(4, mod_filterDataInputDate_ui("filterDataInput_ui_1"))
+        
       ),
       navbarPage(
         title = "text as wide as the logo", theme = "bcgov.css",
