@@ -20,6 +20,7 @@ app_server <- function(input, output, session) {
     library(bcmaps)
     library(tidyr)
     library(gt)
+    library(forcats)
   })
   # get the data from CSV (or SQL if this ever get implemented)
   waiter_show(html = spin_fading_circles())  
@@ -55,7 +56,6 @@ app_server <- function(input, output, session) {
   mod_table3Output_server("table3Output_ui_1", d = data)
   mod_figure1Output_server("figure1Output_ui_1", d = data)
   mod_map1Output_server("map1Output_ui_1", d = data)
+  mod_summaryTableRegionOutput_server("summaryTableRegionOutput_ui_1", d = data)
   mod_summaryTable1Output_server("summaryTable1Output_ui_1", d = data)
-  mod_summaryTable2Output_server("summaryTable2Output_ui_1", d = data)
-  mod_summaryTable3Output_server("summaryTable3Output_ui_1", d = data)
 }

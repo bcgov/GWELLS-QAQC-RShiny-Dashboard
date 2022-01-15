@@ -24,7 +24,7 @@ prepare_all_data <- function(connection){
   full_data <- wells %>% 
     dplyr::left_join(geocode) %>% 
     dplyr::left_join(qa %>% dplyr::select(-dplyr::all_of(colnames_in_more_than_one_db))) # %>%
-
+  
   message("done joining")
   
   # the shinyapps.io free plan  is short  on memory, let's help us to stay within limits by erasing tables and running garbade control
@@ -95,13 +95,32 @@ prepare_all_data <- function(connection){
       ),
       table3_flag =  table3_missing_lat_long_flag + table3_missing_finished_well_depth_flag,
       my_intended_water_use =
-        factor(dplyr::if_else(well_class_code == "WATR_SPPLY", intended_water_use_code, "SPECIALIZED"), 
-               levels = c("DOM", "UNK","DWS","COM","IRR","OTHER","TST","OBS","OP_LP_GEO", "SPECIALIZED")
+        forcats::fct_explicit_na(
+        factor(dplyr::case_when(
+          well_class_code == "WATR_SPPLY" &  intended_water_use_code == "UNK"~ "UNK_USE",
+          well_class_code == "WATR_SPPLY" ~ intended_water_use_code,
+          TRUE ~  "SPECIALIZED"), 
+               levels = c("DOM", "UNK_USE","DWS","COM","IRR","OTHER","TST","OBS","OP_LP_GEO", "SPECIALIZED")
+        ),
+        na_level = "MISS_USE"
         )
     )%>%
     dplyr::mutate(
-      fct_well_class_code = factor(well_class_code, levels = c("WATR_SPPLY", "UNK", "MONITOR", "DEW_DRA", "CLS_LP_GEO" ,"GEOTECH" ,"REMEDIATE" ,"INJECTION", "RECHARGE"))
-    )  
+      fct_well_class_code = factor(well_class_code, levels = c("WATR_SPPLY", "UNK", "MONITOR", "DEW_DRA", "CLS_LP_GEO" ,"GEOTECH" ,"REMEDIATE" ,"INJECTION", "RECHARGE")),
+      fct_nr_region_name = forcats::fct_explicit_na(
+        factor(nr_region_name, 
+               levels = c("Cariboo Natural Resource Region", 
+                          "Kootenay-Boundary Natural Resource Region", 
+                          "Northeast Natural Resource Region",
+                          "Omineca Natural Resource Region",
+                          "Skeena Natural Resource Region",
+                          "South Coast Natural Resource Region",
+                          "Thompson-Okanagan Natural Resource Region",
+                          "West Coast Natural Resource Region")
+        ),
+        na_level = "Missing region"
+      )
+    )
   
   message("returning z")
   

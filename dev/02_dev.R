@@ -49,6 +49,7 @@ usethis::use_package( "bcmaps" ) # for loading screen
 usethis::use_package( "sf" ) # for loading screen
 usethis::use_package( "leaflet" ) # for loading screen
 usethis::use_package( "mapview" )
+usethis::use_package( "forcats" )
 
 # devtools::install() ## simon 
 # renv::snapshot(type = "explicit") # simon
@@ -62,8 +63,8 @@ golem::add_module( name = "table3Output" ) # Name of the module
 golem::add_module( name = "figure1Output" ) # Name of the module
 golem::add_module( name = "map1Output" )
 golem::add_module( name = "summaryTable1Output" )
-golem::add_module( name = "summaryTable2Output" )
-golem::add_module( name = "summaryTable3Output" )
+golem::add_module( name = "summaryTableRegionOutput" )
+
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*

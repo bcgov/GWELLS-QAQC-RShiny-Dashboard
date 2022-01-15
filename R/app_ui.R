@@ -32,24 +32,10 @@ app_ui <- function(request) {
           ),        
           bc_template_footer
         ),   
+        
+
         tabPanel(
-          "Summary Table 2",
-          sidebarLayout(
-            sidebarPanel(width = 2, helpText("helptext summaryTable2")),
-            mainPanel(width = 10, mod_summaryTable2Output_ui("summaryTable2Output_ui_1"))
-          ),        
-          bc_template_footer
-        ),   
-        tabPanel(
-          "Summary Table 3",
-          sidebarLayout(
-            sidebarPanel(width = 2, helpText("helptext summaryTable3")),
-            mainPanel(width = 10, mod_summaryTable3Output_ui("summaryTable3Output_ui_1"))
-          ),        
-          bc_template_footer
-        ),   
-        tabPanel(
-          "Data Table 1",
+          "Post-WSA Wells",
           sidebarLayout(
             sidebarPanel(width = 2,helpText("helptext1")),
             mainPanel(width = 10, mod_table1Output_ui("table1Output_ui_1"))
@@ -59,7 +45,7 @@ app_ui <- function(request) {
         ),
         
         tabPanel(
-          "Data Table 2",
+          "Mislocated Wells",
           sidebarLayout(
             sidebarPanel(width = 2,helpText("helptext table2")),
             mainPanel(width = 10, mod_table2Output_ui("table2Output_ui_1"))
@@ -67,33 +53,42 @@ app_ui <- function(request) {
           bc_template_footer
         ),
         tabPanel(
-          "Data Table 3",
+          "Pre-WSA Wells",
           sidebarLayout(
             sidebarPanel(width = 2, helpText("helptext table3")),
             mainPanel(width = 10, mod_table3Output_ui("table3Output_ui_1"))
           ),        
           bc_template_footer
-        ),        
+        ),       
         tabPanel(
-          "Figure 1",
+          "Regional Summary Table",
+          sidebarLayout(
+            sidebarPanel(width = 2, helpText("helptext summaryTableRegion")),
+            mainPanel(width = 10, mod_summaryTableRegionOutput_ui("summaryTableRegionOutput_ui_1"))
+          ),        
+          bc_template_footer
+        ),           
+        tabPanel(
+          "Map",
+          sidebarLayout(
+            sidebarPanel(
+              width = 2, helpText("helptext map1.  If more than 2000 wells are requested then only the first 2000 are displayed on the map."),
+              
+            ),
+            mainPanel(width = 10, mod_map1Output_ui("map1Output_ui_1"))
+            #, img(src = "www/region_map.png", height = 400)
+          ),        
+          bc_template_footer
+        ),           
+        tabPanel(
+          "Well Purposes Graph",
           sidebarLayout(
             sidebarPanel(width = 2, helpText("helptext figure1")),
             mainPanel(width = 10, mod_figure1Output_ui("figure1Output_ui_1"))
           ),        
           bc_template_footer
         ),    
-        tabPanel(
-          "Map 1",
-          sidebarLayout(
-            sidebarPanel(
-              width = 2, helpText("helptext map1.  If more than 2000 wells are requested then only the first 2000 are displayed on the map."),
-              
-              ),
-            mainPanel(width = 10, mod_map1Output_ui("map1Output_ui_1"))
-            #, img(src = "www/region_map.png", height = 400)
-          ),        
-          bc_template_footer
-        ),   
+
       )
     )
   )
