@@ -30,7 +30,7 @@ mod_summaryTable1Output_server <- function(id,d){
       wtn_max <- data$wtn_max
       
       df %>% 
-        group_by(nr_region_name)  %>%
+        group_by(fct_nr_region_name,  .drop = FALSE)  %>%
         summarise(Total = n(),
                   after_feb2016 = sum(!old_or_unknown_date),
                   in_table1 = sum(table1_flag>0),
@@ -43,12 +43,12 @@ mod_summaryTable1Output_server <- function(id,d){
                   
                   
         )  %>% 
-        gt(rowname_col = "nr_region_name") %>%
+        gt(rowname_col = "fct_nr_region_name") %>%
         tab_header(
           title = "Wells Highlight by Region",
-          subtitle = paste0("for date_added between ",
+          subtitle = paste0("For Date  Added Between ",
                             date_added_min, " and ", date_added_max,
-                            " and well tag number between ", wtn_min, " and ", wtn_max)
+                            " and Well Tag Number Between ", wtn_min, " and ", wtn_max)
         ) %>%
         fmt_number(columns = everything(), decimals = 0) %>% 
         summary_rows(

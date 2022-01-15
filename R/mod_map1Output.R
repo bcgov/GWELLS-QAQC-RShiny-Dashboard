@@ -10,7 +10,7 @@
 mod_map1Output_ui <- function(id){
   ns <- NS(id)
   tagList(
-    leaflet::leafletOutput(ns("mymap")),
+    leaflet::leafletOutput(ns("mymap"), height = "70vh")   # 
   )
 }
 
@@ -22,16 +22,7 @@ mod_map1Output_server <- function(id, d ){
     ns <- session$ns
     
     
-    # points <- eventReactive(input$recalc, {
-    #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
-    # }, ignoreNULL = FALSE)
-    # output$mymap <- renderLeaflet({
-    #   leaflet() %>%
-    #     addProviderTiles(providers$Stamen.TonerLite,
-    #                      options = providerTileOptions(noWrap = TRUE)
-    #     ) %>%
-    #     addMarkers(data = points())
-    # })
+
     
     bc_landmass <- bcmaps::bc_bound(ask = FALSE) %>% 
       mutate(dummy = 1) %>%
@@ -55,20 +46,22 @@ mod_map1Output_server <- function(id, d ){
       z <- df %>%
         filter(!is.na(longitude_decdeg), !is.na(latitude_decdeg)) %>%
         st_as_sf(coords= c("longitude_decdeg", "latitude_decdeg"), crs = 4326, remove = FALSE)  %>%
-        select(well_tag_number, well_class_code, date_added) %>% 
-        tail(1000)  
+        select(well_tag_number, fct_well_class_code, date_added, nr_region_name ) %>% 
+        tail(5000) 
       
       
       mymap <- z %>% 
         mutate(label = paste0("well tag number: ", well_tag_number)) %>% 
         mapview(
-          zcol = "well_class_code", 
+          zcol = "fct_well_class_code", 
+          popup = popupTable(., zcol = c("well_tag_number", "fct_well_class_code", "date_added", "nr_region_name")),
           map.types = c("CartoDB.Positron", "CartoDB.DarkMatter", "OpenStreetMap",
                         "Esri.WorldShadedRelief"),
-          layer.name = paste0("wells with <br>date added between ",
+          layer.name = paste0("Wells With <br>Date Added Between ",
                               date_added_min, " and ", date_added_max,
-                              " and <br>well tag number between ", wtn_min, " and ", wtn_max),
-          label = .$label
+                              " and <br>Well Tag Number Between ", wtn_min, " and ", wtn_max),
+          label = .$label,
+          col.regions = brewer.pal(n=9,name="Set1")
         ) 
       
       mymap@map %>%

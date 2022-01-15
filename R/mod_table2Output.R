@@ -35,22 +35,23 @@ mod_table2Output_server <- function(id,d){
       df %>% 
         filter(table2_flag) %>%
         arrange(desc(score_address), desc(well_tag_number)) %>%
-        select(well_tag_number, distance_to_matching_pid, score_address, score_location_description, score_city, worktype, company_of_person_responsible, date_added) %>% 
+        select(well_tag_number, distance_to_matching_pid, score_address, score_city, worktype, company_of_person_responsible, date_added) %>% 
         DT::datatable(.,
-                      colnames = c("well tag number",
-                                   "distance to matching pid",
-                                   "score address",
-                                   "score location description",
-                                   "score city",
-                                   "work type",
-                                   "company of person responsible",
-                                   "date added"
+                      colnames = c("Well Tag Number",
+                                   "Distance to Matching PID",
+                                   "Score Address",
+                                   "Score City",
+                                   "Work Type",
+                                   "Company of Person Responsible",
+                                   "Date Added"
                       ),
-                      caption = paste0("Table 2 for date_added between ",
+                      caption = paste0("Mislocated Wells for Date Added Between ",
                                        date_added_min, " and ", date_added_max,
-                                       " and well tag number between ", wtn_min, " and ", wtn_max),
+                                       " and Well Tag Number Between ", wtn_min, " and ", wtn_max),
                       rownames = FALSE,
-                      escape = FALSE
+                      escape = FALSE,
+                      filter = "top",
+                      options= list(pageLength = 25, autoWidth = TRUE)
         )
     })
   })

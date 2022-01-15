@@ -25,7 +25,7 @@ app_ui <- function(request) {
       navbarPage(
         title = "text as wide as the logo", theme = "bcgov.css",
         tabPanel(
-          "Summary Table 1",
+          "Summary Table",
           sidebarLayout(
             sidebarPanel(width = 2, helpText("helptext summaryTable1")),
             mainPanel(width = 10, mod_summaryTable1Output_ui("summaryTable1Output_ui_1"))
@@ -61,7 +61,7 @@ app_ui <- function(request) {
           bc_template_footer
         ),       
         tabPanel(
-          "Regional Summary Table",
+          "Regional Summary",
           sidebarLayout(
             sidebarPanel(width = 2, helpText("helptext summaryTableRegion")),
             mainPanel(width = 10, mod_summaryTableRegionOutput_ui("summaryTableRegionOutput_ui_1"))
@@ -72,11 +72,12 @@ app_ui <- function(request) {
           "Map",
           sidebarLayout(
             sidebarPanel(
-              width = 2, helpText("helptext map1.  If more than 2000 wells are requested then only the first 2000 are displayed on the map."),
+              width = 2, helpText("helptext map1.  If more than 5000 wells are requested then only the first 5000 are displayed on the map."),
               
             ),
-            mainPanel(width = 10, mod_map1Output_ui("map1Output_ui_1"))
-            #, img(src = "www/region_map.png", height = 400)
+            mainPanel(width = 10, 
+                      mod_map1Output_ui("map1Output_ui_1")
+                      )
           ),        
           bc_template_footer
         ),           

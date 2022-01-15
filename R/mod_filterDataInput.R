@@ -12,7 +12,7 @@ mod_filterDataInputWTN_ui <- function(id){
   
   shinyWidgets::numericRangeInput(
     inputId = ns("wtn_range"), 
-    label = "wtn_range",
+    label = "Well Tag Number Range",
     value = c(1, 999999)
   )
 }
@@ -31,7 +31,7 @@ mod_filterDataInputDate_ui <- function(id){
   
   dateRangeInput(
     inputId = ns("date_range"), 
-    label = "date_range",
+    label = "Date Added Range",
     start  =  Sys.Date()-13,
     end    =  Sys.Date(),
     min    = "2021-12-13",
@@ -52,7 +52,7 @@ mod_filterDataInputGenerate_ui <- function(id){
   ns <- NS(id)
   actionButton(
     inputId = ns("generate"), 
-    label = "Generate tables and figures",
+    label = "Generate Tables and Figures",
     icon = icon("paper-plane"),
     style="color:#fff;background-color: #00ab66")
 }

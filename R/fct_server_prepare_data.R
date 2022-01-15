@@ -99,8 +99,8 @@ prepare_all_data <- function(connection){
         factor(dplyr::case_when(
           well_class_code == "WATR_SPPLY" &  intended_water_use_code == "UNK"~ "UNK_USE",
           well_class_code == "WATR_SPPLY" ~ intended_water_use_code,
-          TRUE ~  "SPECIALIZED"), 
-               levels = c("DOM", "UNK_USE","DWS","COM","IRR","OTHER","TST","OBS","OP_LP_GEO", "SPECIALIZED")
+          TRUE ~  "Non-Water Supply"), 
+               levels = c("DOM", "UNK_USE","DWS","COM","IRR","OTHER","TST","OBS","OP_LP_GEO", "Non-Water Supply")
         ),
         na_level = "MISS_USE"
         )

@@ -49,7 +49,9 @@ usethis::use_package( "bcmaps" ) # for loading screen
 usethis::use_package( "sf" ) # for loading screen
 usethis::use_package( "leaflet" ) # for loading screen
 usethis::use_package( "mapview" )
-usethis::use_package( "forcats" )
+usethis::use_package( "forcats" ) # for fct_explicit_na
+usethis::use_package( "leafpop" ) # for popuptable on map
+usethis::use_package( "RColorBrewer" ) # for qualitative palette on map
 
 # devtools::install() ## simon 
 # renv::snapshot(type = "explicit") # simon

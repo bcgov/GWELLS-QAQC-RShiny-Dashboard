@@ -44,19 +44,21 @@ mod_table3Output_server <- function(id,d){
           )
         ) %>% 
         DT::datatable(.,
-                      colnames = c("well tag number",
-                                   "problem count",
-                                   "well type",
-                                   "lat long",
-                                   "finished well depth",
-                                   "company of person responsible",
-                                   "date added"
+                      colnames = c("Well Tag Number",
+                                   "Problem Count",
+                                   "Well Type",
+                                   "Lat Long",
+                                   "Finished Well Depth",
+                                   "Company of Person Responsible",
+                                   "Date Added"
                       ),
-                      caption = paste0("Table 3 for date_added between ",
+                      caption = paste0("Pre-WSA Wells Missing Info for Date Added Between ",
                                        date_added_min, " and ", date_added_max,
-                                       " and well tag number between ", wtn_min, " and ", wtn_max),
+                                       " and Well Tag Number Between ", wtn_min, " and ", wtn_max),
                       rownames = FALSE,
-                      escape = FALSE
+                      escape = FALSE,
+                      filter = "top",
+                      options= list(pageLength = 25, autoWidth = TRUE)
         )
     })
   })
