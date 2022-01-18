@@ -80,7 +80,7 @@ prepare_all_data <- function(connection){
       table2_flag = dplyr::case_when(
         distance_to_matching_pid >400 ~ TRUE,
         0< score_address & score_address < 80 ~ TRUE,
-        0 <score_city ~ TRUE,
+        0 < score_city & score_city < 40  ~ TRUE,
         TRUE ~ FALSE
       ),
       table3_missing_lat_long_flag =  dplyr::case_when(
