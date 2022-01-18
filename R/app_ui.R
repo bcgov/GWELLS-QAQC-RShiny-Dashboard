@@ -20,8 +20,8 @@ app_ui <- function(request) {
         column(4, mod_filterDataInputGenerate_ui("filterDataInput_ui_1")),
         column(4, mod_filterDataInputWTN_ui("filterDataInput_ui_1")),
         column(4, mod_filterDataInputDate_ui("filterDataInput_ui_1"))
-        
       ),
+      hr(),
       navbarPage(
         title = "text as wide as the logo", theme = "bcgov.css",
         tabPanel(
@@ -32,8 +32,6 @@ app_ui <- function(request) {
           ),        
           bc_template_footer
         ),   
-        
-
         tabPanel(
           "Post-WSA Wells",
           sidebarLayout(
@@ -77,7 +75,7 @@ app_ui <- function(request) {
             ),
             mainPanel(width = 10, 
                       mod_map1Output_ui("map1Output_ui_1")
-                      )
+            )
           ),        
           bc_template_footer
         ),           
@@ -89,13 +87,11 @@ app_ui <- function(request) {
           ),        
           bc_template_footer
         ),    
-
+        
       )
     )
   )
 }
-
-
 
 #' Add external Resources to the Application
 #'
@@ -114,7 +110,7 @@ golem_add_external_resources <- function() {
     favicon(),
     bundle_resources(
       path = app_sys("app/www"),
-      app_title = "gwells_shiny"
+      app_title = "GWELLS QAQC"
     )
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
