@@ -5,6 +5,13 @@ logical_to_character_icon <- function(x){
   )
 }
 
+logical_to_good_bad <- function(x){
+  dplyr::if_else(x == TRUE,
+                 "GOOD",
+                 "BAD")
+  
+}
+
 
 getAvailMem <- function(format = TRUE) {
   

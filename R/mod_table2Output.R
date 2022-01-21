@@ -14,6 +14,34 @@ mod_table2Output_ui <- function(id){
   )
 }
 
+
+#' table2OutputData Server Functions
+#'
+#' @noRd 
+mod_table2OutputData_server <- function(id,d){
+  moduleServer( id, function(input, output, session){
+    message("run  mod_table2Output_server")
+    ns <- session$ns
+    
+
+      data <- d()
+      
+      df <- data$df
+      date_added_min <- data$date_added_min
+      date_added_max <- data$date_added_max
+      wtn_min <- data$wtn_min
+      wtn_max <- data$wtn_max
+      
+      
+      df %>% 
+        filter(table2_flag) %>%
+        arrange(desc(score_address), desc(well_tag_number)) %>%
+        select(well_tag_number, distance_to_matching_pid, score_address, score_city, worktype, company_of_person_responsible, date_added) 
+  })
+}
+
+
+
 #' table2Output Server Functions
 #'
 #' @noRd 

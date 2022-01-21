@@ -66,6 +66,10 @@ app_server <- function(input, output, session) {
   data <- mod_filterDataInput_server("filterDataInput_ui_1",prepared_gwells)
   
   # Table 1 is generated from the filtered data
+  table1Data <- reactive({mod_table1OutputData_server("table1Output_ui_1", d = data)})
+  table2Data <- reactive({mod_table2OutputData_server("table2Output_ui_1", d = data)})
+  table3Data <- reactive({mod_table3OutputData_server("table3Output_ui_1", d = data)})
+  
   mod_table1Output_server("table1Output_ui_1", d = data)
   mod_table2Output_server("table2Output_ui_1", d = data)
   mod_table3Output_server("table3Output_ui_1", d = data)
@@ -73,4 +77,28 @@ app_server <- function(input, output, session) {
   mod_map1Output_server("map1Output_ui_1", d = data)
   mod_summaryTableRegionOutput_server("summaryTableRegionOutput_ui_1", d = data)
   mod_summaryTable1Output_server("summaryTable1Output_ui_1", d = data)
+  
+  
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      "tables.zip"
+    },
+    content = function(file) {
+      
+      #go to a temp dir to avoid permission issues
+      owd <- setwd(tempdir())
+      on.exit(setwd(owd))
+      
+      write.csv(table1Data(), "table1.csv", row.names = FALSE)
+      write.csv(table2Data(), "table2.csv", row.names = FALSE)
+      write.csv(table3Data(), "table3.csv", row.names = FALSE)
+      #create the zip file
+      zip(file,c("table1.csv", "table2.csv", "table3.csv"))
+      
+      
+      
+      
+      
+    }
+  )
 }

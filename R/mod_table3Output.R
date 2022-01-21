@@ -14,6 +14,39 @@ mod_table3Output_ui <- function(id){
   )
 }
 
+
+#' table3OutputData Server Functions
+#'
+#' @noRd 
+mod_table3OutputData_server <- function(id,d){
+  moduleServer( id, function(input, output, session){
+    ns <- session$ns
+    message("run  mod_table3Output_server")
+
+      data <- d()
+      
+      df <- data$df
+      date_added_min <- data$date_added_min
+      date_added_max <- data$date_added_max
+      wtn_min <- data$wtn_min
+      wtn_max <- data$wtn_max
+      
+      df %>% 
+        filter(table3_flag >0 ) %>% 
+        arrange(desc(table3_flag), desc(well_tag_number)) %>%
+        select(well_tag_number,table3_flag,  my_well_type, 
+               table3_missing_lat_long_flag,table3_missing_finished_well_depth_flag,
+               company_of_person_responsible,date_added) %>%
+        mutate(
+          across(.cols = c("table3_missing_lat_long_flag", 
+                           "table3_missing_finished_well_depth_flag"
+          ),
+          .fns = ~logical_to_good_bad(!as.logical(.x))
+          )
+        ) 
+  })
+}
+
 #' table3Output Server Functions
 #'
 #' @noRd 
@@ -40,7 +73,7 @@ mod_table3Output_server <- function(id,d){
           across(.cols = c("table3_missing_lat_long_flag", 
                            "table3_missing_finished_well_depth_flag"
                            ),
-                 .fns = ~logical_to_character_icon(!as.logical(.x))
+                 .fns = ~logical_to_good_bad(!as.logical(.x))
           )
         ) %>% 
         DT::datatable(.,

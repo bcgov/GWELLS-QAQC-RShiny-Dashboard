@@ -14,6 +14,49 @@ mod_table1Output_ui <- function(id){
   )
 }
 
+
+
+
+#' table1OutputData Server Functions
+#'
+#' @noRd 
+mod_table1OutputData_server <- function(id,d){
+  moduleServer( id, function(input, output, session){
+    
+    message("run  mod_table1OutputData_server")
+    ns <- session$ns
+    
+    
+      data <- d()
+      
+      df <- data$df
+      date_added_min <- data$date_added_min
+      date_added_max <- data$date_added_max
+      wtn_min <- data$wtn_min
+      wtn_max <- data$wtn_max
+      
+      df %>% 
+        dplyr::filter(table1_flag >0 ) %>%
+        dplyr::arrange(dplyr::desc(table1_flag), dplyr::desc(well_tag_number)) %>%
+        dplyr::select(
+          well_tag_number,table1_flag,  my_well_type, table1_missing_lat_long_flag, 
+          table1_table1_missing__wdip_flag, table1_missing_finished_well_depth_flag, 
+          table1_missing_person_responsible_flag, company_of_person_responsible, date_added) %>%
+        mutate(
+          across(.cols = c("table1_missing_lat_long_flag", 
+                           "table1_table1_missing__wdip_flag", 
+                           "table1_missing_finished_well_depth_flag", 
+                           "table1_missing_person_responsible_flag"),
+                 #.fns = ~logical_to_character_icon(!as.logical(.x))
+                 .fns = ~logical_to_good_bad(!as.logical(.x))
+          )
+        )
+
+  })
+}
+
+
+
 #' table1Output Server Functions
 #'
 #' @noRd 
@@ -44,7 +87,8 @@ mod_table1Output_server <- function(id,d){
                            "table1_table1_missing__wdip_flag", 
                            "table1_missing_finished_well_depth_flag", 
                            "table1_missing_person_responsible_flag"),
-                 .fns = ~logical_to_character_icon(!as.logical(.x))
+                 #.fns = ~logical_to_character_icon(!as.logical(.x))
+                 .fns = ~logical_to_good_bad(!as.logical(.x))
           )
         ) %>% 
         DT::datatable(
