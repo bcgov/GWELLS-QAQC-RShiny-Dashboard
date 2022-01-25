@@ -47,7 +47,7 @@ golem::add_shinyappsio_file()
 
 
 # ajouté par simon coulombe
-rsconnect::setAccountInfo(name='bcgov-env',
-                          token='CBFC2CC49A93E5F6FE27B7CD107BFE29',
-                          secret='SECRET')
+# rsconnect::setAccountInfo(name='bcgov-env',
+#                           token='CBFC2CC49A93E5F6FE27B7CD107BFE29',
+#                           secret='SECRET')
 rsconnect::deployApp(account = "bcgov-env")

@@ -45,14 +45,12 @@ app_server <- function(input, output, session) {
       user = Sys.getenv("BCGOV_USR"),
       password=Sys.getenv("BCGOV_PWD")
     )
-    
     # get data from the 3 tables, left join it, create some flags etc..
     full_data <- download_data_sql(con1)
   }
   
   if(data_source == "csv"){
     full_data <- download_data_csv()
-    
   }
   
   prepared_gwells <- prepare_all_data(full_data)
@@ -79,7 +77,46 @@ app_server <- function(input, output, session) {
   mod_summaryTable1Output_server("summaryTable1Output_ui_1", d = data)
   
   
-  output$downloadData <- downloadHandler(
+  mod_downloadFileOutput_server("downloadFileOutput_ui_1", table1= table1Data, table2 = table2Data, table3 = table3Data)
+  
+  # # https://community.rstudio.com/t/download-data-button-to-appear-only-when-data-is-fetched/1426/4
+  # # https://shiny.rstudio.com/reference/shiny/1.6.0/renderUI.html
+  # # https://shiny.rstudio.com/articles/req.html
+  # output$downloadData <-  renderUI({
+  #   req(input$generate)
+  #   downloadButton("downloadData01")
+  # })
+  # 
+  # output$downloadData01 <- downloadHandler(
+  #   filename = function() {
+  #     "tables.zip"
+  #   },
+  #   content = function(file) {
+  #     
+  #     #go to a temp dir to avoid permission issues
+  #     owd <- setwd(tempdir())
+  #     on.exit(setwd(owd))
+  #     
+  #     write.csv(table1Data(), "table1.csv", row.names = FALSE)
+  #     write.csv(table2Data(), "table2.csv", row.names = FALSE)
+  #     write.csv(table3Data(), "table3.csv", row.names = FALSE)
+  #     #create the zip file
+  #     zip(file,c("table1.csv", "table2.csv", "table3.csv"))
+  #     
+  
+  #}
+  # )
+  
+  
+  # code simple pour bouton qui s'affiche tout seul.. pas de module
+  
+  output$downloadData <- renderUI({
+    req(table1Data())
+    downloadButton("downloadData01")
+  })
+  
+  
+  output$downloadData01 <- downloadHandler(
     filename = function() {
       "tables.zip"
     },
@@ -95,10 +132,7 @@ app_server <- function(input, output, session) {
       #create the zip file
       zip(file,c("table1.csv", "table2.csv", "table3.csv"))
       
-      
-      
-      
-      
     }
   )
+  
 }

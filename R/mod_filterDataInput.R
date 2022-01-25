@@ -57,6 +57,9 @@ mod_filterDataInputGenerate_ui <- function(id){
     style="color:#fff;background-color: #00ab66")
 }
 
+
+
+
 #' filterDataInput Server Functions
 #'
 #' @noRd 

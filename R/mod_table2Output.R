@@ -64,6 +64,7 @@ mod_table2Output_server <- function(id,d){
         filter(table2_flag) %>%
         arrange(desc(score_address), desc(well_tag_number)) %>%
         select(well_tag_number, distance_to_matching_pid, score_address, score_city, worktype, company_of_person_responsible, date_added) %>% 
+        mutate(distance_to_matching_pid= round(distance_to_matching_pid,1)) %>% 
         DT::datatable(.,
                       colnames = c("Well Tag Number",
                                    "Distance to Matching PID",

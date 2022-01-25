@@ -17,7 +17,12 @@ app_ui <- function(request) {
               .glyphicon-exclamation-sign {color:#e5413b}
               .glyphicon-flag, .glyphicon-trash {color:#28b728}"),
       fluidRow(
-        column(4, mod_filterDataInputGenerate_ui("filterDataInput_ui_1"), downloadButton("downloadData", "Download")),
+        column(4, 
+               mod_filterDataInputGenerate_ui("filterDataInput_ui_1"), 
+               uiOutput("downloadData")
+               #downloadButton("downloadData", "Download")
+               #mod_downloadFileOutput_ui("downloadFileOutput_ui_1")
+        ),
         column(4, mod_filterDataInputWTN_ui("filterDataInput_ui_1")),
         column(4, mod_filterDataInputDate_ui("filterDataInput_ui_1"))
       ),
@@ -25,18 +30,25 @@ app_ui <- function(request) {
       navbarPage(
         title = "text as wide as the logo", theme = "bcgov.css",
         tabPanel(
+          "Overview",
+          
+          mainPanel(width = 12, helpText(HTML(helptext_overview()))),
+          bc_template_footer
+        ),   
+        
+        tabPanel(
           "Summary Table",
           sidebarLayout(
-            sidebarPanel(width = 2, helpText("helptext summaryTable1")),
-            mainPanel(width = 10, mod_summaryTable1Output_ui("summaryTable1Output_ui_1"))
+            sidebarPanel(width = 3, helpText(HTML(helptext_summaryTable1()))),
+            mainPanel(width = 9, mod_summaryTable1Output_ui("summaryTable1Output_ui_1"))
           ),        
           bc_template_footer
         ),   
         tabPanel(
           "Post-WSA Wells",
           sidebarLayout(
-            sidebarPanel(width = 2,helpText("helptext1")),
-            mainPanel(width = 10, mod_table1Output_ui("table1Output_ui_1"))
+            sidebarPanel(width = 3,helpText(HTML(helptext_post_wsa_wells()))),
+            mainPanel(width = 9, mod_table1Output_ui("table1Output_ui_1"))
             
           ),
           bc_template_footer
@@ -45,24 +57,24 @@ app_ui <- function(request) {
         tabPanel(
           "Mislocated Wells",
           sidebarLayout(
-            sidebarPanel(width = 2,helpText("helptext table2")),
-            mainPanel(width = 10, mod_table2Output_ui("table2Output_ui_1"))
+            sidebarPanel(width = 3,helpText(HTML(helptext_mislocated_wells()))),
+            mainPanel(width = 9, mod_table2Output_ui("table2Output_ui_1"))
           ),        
           bc_template_footer
         ),
         tabPanel(
           "Pre-WSA Wells",
           sidebarLayout(
-            sidebarPanel(width = 2, helpText("helptext table3")),
-            mainPanel(width = 10, mod_table3Output_ui("table3Output_ui_1"))
+            sidebarPanel(width = 3, helpText(helptext_pre_wsa_wells())),
+            mainPanel(width = 9, mod_table3Output_ui("table3Output_ui_1"))
           ),        
           bc_template_footer
         ),       
         tabPanel(
           "Regional Summary",
           sidebarLayout(
-            sidebarPanel(width = 2, helpText("helptext summaryTableRegion")),
-            mainPanel(width = 10, mod_summaryTableRegionOutput_ui("summaryTableRegionOutput_ui_1"))
+            sidebarPanel(width = 3, helpText(HTML(helptext_region_summary()))),
+            mainPanel(width = 9, mod_summaryTableRegionOutput_ui("summaryTableRegionOutput_ui_1"))
           ),        
           bc_template_footer
         ),           
@@ -70,10 +82,10 @@ app_ui <- function(request) {
           "Map",
           sidebarLayout(
             sidebarPanel(
-              width = 2, helpText("helptext map1.  If more than 5000 wells are requested then only the first 5000 are displayed on the map."),
+              width = 3, helpText(HTML(helptext_map())),
               
             ),
-            mainPanel(width = 10, 
+            mainPanel(width = 9, 
                       mod_map1Output_ui("map1Output_ui_1")
             )
           ),        
@@ -82,8 +94,8 @@ app_ui <- function(request) {
         tabPanel(
           "Well Purposes Graph",
           sidebarLayout(
-            sidebarPanel(width = 2, helpText("helptext figure1")),
-            mainPanel(width = 10, mod_figure1Output_ui("figure1Output_ui_1"))
+            sidebarPanel(width = 3, helpText(HTML(helptext_bar_chart()))),
+            mainPanel(width = 9, mod_figure1Output_ui("figure1Output_ui_1"))
           ),        
           bc_template_footer
         ),    

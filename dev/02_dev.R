@@ -59,7 +59,7 @@ usethis::use_package( "RColorBrewer" ) # for qualitative palette on map
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module( name = "filterDataInput" ) # Name of the module
-golem::add_module( name = "downloadFileInput" )
+golem::add_module( name = "downloadFileOutput" )
 golem::add_module( name = "table1Output" ) # Name of the module
 golem::add_module( name = "table2Output" ) # Name of the module
 golem::add_module( name = "table3Output" ) # Name of the module
