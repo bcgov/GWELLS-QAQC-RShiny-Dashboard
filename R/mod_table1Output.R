@@ -47,8 +47,6 @@ mod_table1OutputData_server <- function(id,d){
                            "table1_table1_missing__wdip_flag", 
                            "table1_missing_finished_well_depth_flag", 
                            "table1_missing_person_responsible_flag"),
-                 #.fns = ~logical_to_character_icon(!as.logical(.x))
-                 #.fns = ~logical_to_good_bad(!as.logical(.x))
                  .fns = ~logical_to_ok_issue(!as.logical(.x))
           )
         )
@@ -88,8 +86,7 @@ mod_table1Output_server <- function(id,d){
                            "table1_table1_missing__wdip_flag", 
                            "table1_missing_finished_well_depth_flag", 
                            "table1_missing_person_responsible_flag"),
-                 #.fns = ~logical_to_character_icon(!as.logical(.x))
-                 .fns = ~logical_to_good_bad(!as.logical(.x))
+                 .fns = ~logical_to_ok_issue(!as.logical(.x))
           )
         ) %>% 
         DT::datatable(
