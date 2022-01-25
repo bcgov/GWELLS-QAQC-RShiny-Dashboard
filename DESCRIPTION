@@ -16,6 +16,8 @@ Imports:
     DT,
     forcats,
     ggplot2,
+    ggrepel,
+    ggthemes,
     glue,
     golem (>= 0.3.1),
     gt,

@@ -52,6 +52,10 @@ usethis::use_package( "mapview" )
 usethis::use_package( "forcats" ) # for fct_explicit_na
 usethis::use_package( "leafpop" ) # for popuptable on map
 usethis::use_package( "RColorBrewer" ) # for qualitative palette on map
+usethis::use_package( "ggthemes" ) # for tableau 20 color palette
+usethis::use_package( "ggrepel" ) # for geom_text_repel
+usethis::use_package( "plotly" ) # for ggplotly()
+
 
 # devtools::install() ## simon 
 # renv::snapshot(type = "explicit") # simon

@@ -24,6 +24,9 @@ app_server <- function(input, output, session) {
     library(leafpop)
     library(RColorBrewer)
     library(gwellsshiny)
+    library(ggthemes)#  for tableau 20 palette
+    library(ggrepel) # for geom_text_repel
+    library(plotly)
   })
   # get the data from CSV (or SQL if this ever get implemented)
   waiter_show(html = spin_fading_circles()) 
@@ -52,7 +55,6 @@ app_server <- function(input, output, session) {
   if(data_source == "csv"){
     full_data <- download_data_csv()
   }
-  
   prepared_gwells <- prepare_all_data(full_data)
   
   #ok we are ready to roll!  

@@ -17,14 +17,10 @@ app_ui <- function(request) {
               .glyphicon-exclamation-sign {color:#e5413b}
               .glyphicon-flag, .glyphicon-trash {color:#28b728}"),
       fluidRow(
-        column(4, 
-               mod_filterDataInputGenerate_ui("filterDataInput_ui_1"), 
-               #uiOutput("downloadData")
-               #downloadButton("downloadData", "Download")
-               mod_downloadFileOutput_ui("downloadFileOutput_ui_1")
-        ),
-        column(4, mod_filterDataInputWTN_ui("filterDataInput_ui_1")),
-        column(4, mod_filterDataInputDate_ui("filterDataInput_ui_1"))
+        column(3, mod_filterDataInputGenerate_ui("filterDataInput_ui_1")), 
+        column(3, mod_downloadFileOutput_ui("downloadFileOutput_ui_1")), 
+        column(3, mod_filterDataInputWTN_ui("filterDataInput_ui_1")),
+        column(3, mod_filterDataInputDate_ui("filterDataInput_ui_1"))
       ),
       hr(),
       navbarPage(

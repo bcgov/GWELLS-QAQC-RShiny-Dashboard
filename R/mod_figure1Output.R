@@ -10,8 +10,9 @@
 mod_figure1Output_ui <- function(id){
   ns <- NS(id)
   tagList(
-    shiny::plotOutput(ns("plot"))
-    #DT::dataTableOutput(ns("table"))
+    #shiny::plotOutput(ns("plot"))
+    plotlyOutput(ns("plot"))
+    
   )
 }
     
@@ -28,7 +29,7 @@ mod_figure1Output_server <- function(id,d){
     #     DT::datatable(mtcars)
     # })
     # 
-     output$plot <- renderPlot({
+     output$plot <- renderPlotly({
       data <- d()
 
     df <- data$df
@@ -38,21 +39,41 @@ mod_figure1Output_server <- function(id,d){
     wtn_max <- data$wtn_max
 
 
-    df %>%
-      count(fct_well_class_code, my_intended_water_use) %>%
-      ggplot2::ggplot()+
-      geom_col(aes(x=fct_well_class_code, y= n, fill = forcats::fct_rev(my_intended_water_use)))+
-      scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+    # df %>%
+    #   count(fct_well_class_code, my_intended_water_use) %>%
+    #   ggplot2::ggplot()+
+    #   geom_col(aes(x=fct_well_class_code, y= n, fill = forcats::fct_rev(my_intended_water_use)))+
+    #   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+    #   labs(
+    #     title = "Figure 1 - Intended Use by Well Class Code",
+         # subtitle = paste0("date added between ",
+         #                   date_added_min, " and ", date_added_max,
+         #                   " and well tag number between ", wtn_min, " and ", wtn_max),
+    #     x= "Well Class Code",
+    #     y = "Count",
+    #     fill = "Intended Use"
+    #   ) + 
+    #   theme_light()
+    
+    
+    myplot <- df %>% 
+      count(water_or_not_water, uses_and_class) %>% 
+      ggplot(aes(x=water_or_not_water, y=n, fill = uses_and_class )) + 
+      geom_bar(position =position_stack(reverse=TRUE), stat ="identity") + 
+      scale_fill_tableau(palette="Tableau 20", drop = FALSE) + 
+      #geom_text_repel(aes(label = n), size=3, position = position_stack(vjust =0.5, reverse = TRUE ), max.overlaps = Inf) +
+      theme_light() + 
       labs(
-        title = "Figure 1 - Intended Use by Well Class Code",
+        title = "Figure 1 - Count of Intended Use for Water Supply Wells and Well Class for Non Water Supply Wells",
         subtitle = paste0("date added between ",
                           date_added_min, " and ", date_added_max,
                           " and well tag number between ", wtn_min, " and ", wtn_max),
-        x= "Well Class Code",
+        x = "Well Class is Water Supply",
         y = "Count",
-        fill = "Intended Use"
-      ) + 
-      theme_light()
+        fill = "Well class and Intended Use"
+      )
+    
+    ggplotly(myplot)
     })
   })
 }

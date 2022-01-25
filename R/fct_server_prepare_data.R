@@ -87,7 +87,7 @@ prepare_all_data <- function(full_data){
       ),
       old_or_unknown_date = max_date < lubridate::ymd("20160301") | is.na(max_date), 
       my_well_type = dplyr::case_when(
-        artesian_conditions == "True" ~ "artesian",
+        artesian_conditions == "TRUE" ~ "artesian", ## replace with "True" if using SQL instead of csv
         well_class_code == "WATR_SPPLY" ~ "water supply",
         well_class_code == "RECHARGE" ~ "recharge",
         well_class_code == "INJECTION" ~ "injection",
@@ -143,9 +143,7 @@ prepare_all_data <- function(full_data){
             levels = c("DOM", "UNK_USE","DWS","COM","IRR","OTHER","TST","OBS","OP_LP_GEO", "Non-Water Supply")
           ),
           na_level = "MISS_USE"
-        )
-    )%>%
-    dplyr::mutate(
+        ) ,
       fct_well_class_code = factor(well_class_code, levels = c("WATR_SPPLY", "UNK", "MONITOR", "DEW_DRA", "CLS_LP_GEO" ,"GEOTECH" ,"REMEDIATE" ,"INJECTION", "RECHARGE")),
       fct_nr_region_name = forcats::fct_explicit_na(
         factor(nr_region_name, 
@@ -159,6 +157,13 @@ prepare_all_data <- function(full_data){
                           "West Coast Natural Resource Region")
         ),
         na_level = "Missing region"
+      ),
+      water_or_not_water = factor(if_else(well_class_code == "WATR_SPPLY", "Water Supply", "Non Water Supply"), # for the bar chart
+                                  levels = c( "Water Supply", "Non Water Supply")
+      ),
+      uses_and_class = factor(if_else(fct_well_class_code == "WATR_SPPLY",as.character(my_intended_water_use), as.character(fct_well_class_code)),
+                              levels = c("DOM", "UNK_USE","DWS","COM","IRR","OTHER","TST","OBS","OP_LP_GEO",
+                                         "UNK", "MONITOR", "DEW_DRA", "CLS_LP_GEO" ,"GEOTECH" ,"REMEDIATE" ,"INJECTION", "RECHARGE")
       )
     )
   
