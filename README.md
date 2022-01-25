@@ -7,6 +7,18 @@ An R Shiny dashboard that automates filtering and prioritizing wells within the 
 
 ![](inst/app/www/images/gwells.drawio.png)
 
+# Deploying    
+
+- clone the repo.  
+- run the following in R: 
+```
+devtools::build()   
+rsconnect::setAccountInfo(name='bcgov-env',
+                           token='TOKEN',
+                           secret='SECRET')
+rsconnect::deployApp(account = "bcgov-env")
+```
+
 # BC Shiny Template  
 
 Downloaded here : https://github.com/bcgov/ensemble-app-CMIP5
