@@ -3,7 +3,7 @@ An R Shiny dashboard that automates filtering and prioritizing wells within the 
 
 # Process map     
 
-The data for this shiny comes from a CSV located in the [https://github.com/bcgov/GWELLS-QAQC_Geocode_ArchiveData](GWELLS-QAQC_Geocode_ArchiveData) repository.  The CSV is updated nightly by a github action defined in that repo.  Here is the whole process generating the files.
+The data for this shiny comes from a CSV located in the GWELLS-QAQC_Geocode_ArchiveData repository located at https://github.com/bcgov/GWELLS-QAQC_Geocode_ArchiveData.  The CSV is updated nightly by a github action defined in that repo.  Here is the whole process generating the files.
 
 ![](inst/app/www/images/gwells.drawio.png)
 
