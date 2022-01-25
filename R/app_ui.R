@@ -5,6 +5,7 @@
 #' @import shiny
 #' @noRd
 app_ui <- function(request) {
+  library(plotly)
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
