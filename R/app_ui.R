@@ -19,9 +19,9 @@ app_ui <- function(request) {
       fluidRow(
         column(4, 
                mod_filterDataInputGenerate_ui("filterDataInput_ui_1"), 
-               uiOutput("downloadData")
+               #uiOutput("downloadData")
                #downloadButton("downloadData", "Download")
-               #mod_downloadFileOutput_ui("downloadFileOutput_ui_1")
+               mod_downloadFileOutput_ui("downloadFileOutput_ui_1")
         ),
         column(4, mod_filterDataInputWTN_ui("filterDataInput_ui_1")),
         column(4, mod_filterDataInputDate_ui("filterDataInput_ui_1"))

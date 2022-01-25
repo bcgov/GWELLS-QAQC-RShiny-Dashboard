@@ -63,11 +63,6 @@ app_server <- function(input, output, session) {
   # the gwells data is filtered according to whatever filters the user select 
   data <- mod_filterDataInput_server("filterDataInput_ui_1",prepared_gwells)
   
-  # Table 1 is generated from the filtered data
-  table1Data <- reactive({mod_table1OutputData_server("table1Output_ui_1", d = data)})
-  table2Data <- reactive({mod_table2OutputData_server("table2Output_ui_1", d = data)})
-  table3Data <- reactive({mod_table3OutputData_server("table3Output_ui_1", d = data)})
-  
   mod_table1Output_server("table1Output_ui_1", d = data)
   mod_table2Output_server("table2Output_ui_1", d = data)
   mod_table3Output_server("table3Output_ui_1", d = data)
@@ -75,64 +70,13 @@ app_server <- function(input, output, session) {
   mod_map1Output_server("map1Output_ui_1", d = data)
   mod_summaryTableRegionOutput_server("summaryTableRegionOutput_ui_1", d = data)
   mod_summaryTable1Output_server("summaryTable1Output_ui_1", d = data)
+
   
+  # extract the data that is used for the table 1-2-3 so that we can feed them to the download module
+  table1Data <- reactive({mod_table1OutputData_server("table1Output_ui_1", d = data)})
+  table2Data <- reactive({mod_table2OutputData_server("table2Output_ui_1", d = data)})
+  table3Data <- reactive({mod_table3OutputData_server("table3Output_ui_1", d = data)})  
   
+  #define download button content
   mod_downloadFileOutput_server("downloadFileOutput_ui_1", table1= table1Data, table2 = table2Data, table3 = table3Data)
-  
-  # # https://community.rstudio.com/t/download-data-button-to-appear-only-when-data-is-fetched/1426/4
-  # # https://shiny.rstudio.com/reference/shiny/1.6.0/renderUI.html
-  # # https://shiny.rstudio.com/articles/req.html
-  # output$downloadData <-  renderUI({
-  #   req(input$generate)
-  #   downloadButton("downloadData01")
-  # })
-  # 
-  # output$downloadData01 <- downloadHandler(
-  #   filename = function() {
-  #     "tables.zip"
-  #   },
-  #   content = function(file) {
-  #     
-  #     #go to a temp dir to avoid permission issues
-  #     owd <- setwd(tempdir())
-  #     on.exit(setwd(owd))
-  #     
-  #     write.csv(table1Data(), "table1.csv", row.names = FALSE)
-  #     write.csv(table2Data(), "table2.csv", row.names = FALSE)
-  #     write.csv(table3Data(), "table3.csv", row.names = FALSE)
-  #     #create the zip file
-  #     zip(file,c("table1.csv", "table2.csv", "table3.csv"))
-  #     
-  
-  #}
-  # )
-  
-  
-  # code simple pour bouton qui s'affiche tout seul.. pas de module
-  
-  output$downloadData <- renderUI({
-    req(table1Data())
-    downloadButton("downloadData01")
-  })
-  
-  
-  output$downloadData01 <- downloadHandler(
-    filename = function() {
-      "tables.zip"
-    },
-    content = function(file) {
-      
-      #go to a temp dir to avoid permission issues
-      owd <- setwd(tempdir())
-      on.exit(setwd(owd))
-      
-      write.csv(table1Data(), "table1.csv", row.names = FALSE)
-      write.csv(table2Data(), "table2.csv", row.names = FALSE)
-      write.csv(table3Data(), "table3.csv", row.names = FALSE)
-      #create the zip file
-      zip(file,c("table1.csv", "table2.csv", "table3.csv"))
-      
-    }
-  )
-  
-}
+  }

@@ -2,6 +2,7 @@ helptext_overview <- function(){
   "The purpose of this application is to assist Groundwater Data Specialists with the Ministry of Environment's Aquifer and Watershed Science team with their responsibilities pertaining to Quality Assurance/Quality Control (QA/QC) of groundwater data within the Province of BC’s groundwater well database (accessible through the 
 <a href='https://apps.nrs.gov.bc.ca/gwells/'>GWELLS application</a>).<br>
   The application uses publicly available records that are updated nightly.<br>
+  The 'Download' button appears after the `Generate Tables and Figures` button is pressed.<br>
   If you have any questions about the content presented within this application please contact GWELLS@gov.bc.ca. "
   
 }

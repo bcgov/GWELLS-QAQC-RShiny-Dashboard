@@ -1,3 +1,9 @@
+# lots of code taken from these:
+# # https://community.rstudio.com/t/download-data-button-to-appear-only-when-data-is-fetched/1426/4
+# # https://shiny.rstudio.com/reference/shiny/1.6.0/renderUI.html
+# # https://shiny.rstudio.com/articles/req.html
+
+
 #' downloadFileOutput UI Function
 #'
 #' @description A shiny Module.
@@ -10,10 +16,7 @@
 mod_downloadFileOutput_ui <- function(id){
   ns <- NS(id)
   tagList(
-    uiOutput(ns("downloadData"))
-    
-    
-    
+    uiOutput(ns("download_button"))
   )
 }
 
@@ -24,28 +27,26 @@ mod_downloadFileOutput_server <- function(id,table1, table2, table3){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    # output$downloadData01 <- downloadHandler(
-    #   filename = function() {
-    #     "tables.zip"
-    #   },
-    #   content = function(file) {
-    #     #go to a temp dir to avoid permission issues
-    #     owd <- setwd(tempdir())
-    #     on.exit(setwd(owd))
-    #     write.csv(table1(), "table1.csv", row.names = FALSE)
-    #     write.csv(table2(), "table2.csv", row.names = FALSE)
-    #     write.csv(table3(), "table3.csv", row.names = FALSE)
-    #     #create the zip file
-    #     zip(file,c("table1.csv", "table2.csv", "table3.csv"))
-    #   }
-    # )
+    output$download_content <- downloadHandler( 
+      filename = function() {
+        "tables.zip"
+      },
+      content = function(file) {
+        #go to a temp dir to avoid permission issues
+        owd <- setwd(tempdir())
+        on.exit(setwd(owd))
+        write.csv(table1(), "table1.csv", row.names = FALSE)
+        write.csv(table2(), "table2.csv", row.names = FALSE)
+        write.csv(table3(), "table3.csv", row.names = FALSE)
+        #create the zip file
+        zip(file,c("table1.csv", "table2.csv", "table3.csv"))
+      }
+    )
     
-    renderUI({
-      #req(d())
-      downloadButton(ns("downloadData01"))
+    output$download_button <- renderUI({
+      req(table1())
+      downloadButton(ns("download_content"))
     })
-    
-
   })
 }
 

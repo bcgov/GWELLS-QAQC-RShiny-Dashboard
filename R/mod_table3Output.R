@@ -41,7 +41,7 @@ mod_table3OutputData_server <- function(id,d){
           across(.cols = c("table3_missing_lat_long_flag", 
                            "table3_missing_finished_well_depth_flag"
           ),
-          .fns = ~logical_to_good_bad(!as.logical(.x))
+          .fns = ~logical_to_ok_issue(!as.logical(.x))
           )
         ) 
   })

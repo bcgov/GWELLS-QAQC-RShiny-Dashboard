@@ -48,7 +48,8 @@ mod_table1OutputData_server <- function(id,d){
                            "table1_missing_finished_well_depth_flag", 
                            "table1_missing_person_responsible_flag"),
                  #.fns = ~logical_to_character_icon(!as.logical(.x))
-                 .fns = ~logical_to_good_bad(!as.logical(.x))
+                 #.fns = ~logical_to_good_bad(!as.logical(.x))
+                 .fns = ~logical_to_ok_issue(!as.logical(.x))
           )
         )
 

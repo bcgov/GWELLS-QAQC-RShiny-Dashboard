@@ -12,6 +12,12 @@ logical_to_good_bad <- function(x){
   
 }
 
+logical_to_ok_issue <- function(x){
+  dplyr::if_else(x == TRUE,
+                 "OK",
+                 "Issue")
+  
+}
 
 getAvailMem <- function(format = TRUE) {
   
