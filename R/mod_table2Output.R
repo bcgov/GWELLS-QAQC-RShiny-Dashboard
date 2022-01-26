@@ -36,7 +36,7 @@ mod_table2OutputData_server <- function(id,d){
       df %>% 
         filter(table2_flag) %>%
         arrange(desc(score_address), desc(well_tag_number)) %>%
-        select(well_tag_number, distance_to_matching_pid, score_address, score_city, worktype, company_of_person_responsible, date_added) 
+        select(well_tag_number, distance_geocode, distance_to_matching_pid, score_address, score_city, worktype, company_of_person_responsible, date_added) 
   })
 }
 

@@ -35,11 +35,11 @@ mod_downloadFileOutput_server <- function(id,table1, table2, table3){
         #go to a temp dir to avoid permission issues
         owd <- setwd(tempdir())
         on.exit(setwd(owd))
-        write.csv(table1(), "table1.csv", row.names = FALSE)
-        write.csv(table2(), "table2.csv", row.names = FALSE)
-        write.csv(table3(), "table3.csv", row.names = FALSE)
+        write.csv(table1(), "table1_post_wsa_wells.csv", row.names = FALSE)
+        write.csv(table2(), "table2_mislocated_wells.csv", row.names = FALSE)
+        write.csv(table3(), "table3_pre_wsa_wells.csv", row.names = FALSE)
         #create the zip file
-        zip(file,c("table1.csv", "table2.csv", "table3.csv"))
+        zip(file,c("table1_post_wsa_wells.csv", "table2_mislocated_wells.csv", "table3_pre_wsa_wells.csv"))
       }
     )
     

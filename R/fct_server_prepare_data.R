@@ -120,7 +120,6 @@ prepare_all_data <- function(full_data){
         distance_to_matching_pid > 25 ~ TRUE,
         distance_geocode > 400 ~ TRUE,
         0< score_address & score_address < 80 ~ TRUE,
-        0 < score_city & score_city < 40  ~ TRUE,
         TRUE ~ FALSE
       ),
       table3_missing_lat_long_flag =  dplyr::case_when(
