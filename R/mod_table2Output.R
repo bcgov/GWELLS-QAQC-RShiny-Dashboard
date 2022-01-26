@@ -75,7 +75,7 @@ mod_table2Output_server <- function(id,d){
                                    "Company of Person Responsible",
                                    "Date Added"
                       ),
-                      caption = paste0("Mislocated Wells for Date Added Between ",
+                      caption = paste0("Table 2 - Mislocated Wells for Date Added Between ",
                                        date_added_min, " and ", date_added_max,
                                        " and Well Tag Number Between ", wtn_min, " and ", wtn_max),
                       rownames = FALSE,

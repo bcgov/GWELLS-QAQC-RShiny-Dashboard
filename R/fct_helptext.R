@@ -1,6 +1,6 @@
 helptext_overview <- function(){
   
-  "<h1>About</h1><br>
+  "<h2>About</h1><br>
   The purpose of this application is to assist Groundwater Data Specialists within the Ministry of Environment's Aquifer and Watershed Science team with their responsibilities pertaining to Quality Assurance/Quality Control (QA/QC) of groundwater data within the Province's groundwater well database (accessible through the 
 <a href='https://apps.nrs.gov.bc.ca/gwells/'>GWELLS application</a>).<br>
   The application uses publicly available records that are updated nightly.  This app was launched on December 13, 2021. All records that were in GWELLS prior to that date were assigned “Date Added” December 13, 2021. To view the full dataset set the date range to December 13, 2021 to present.<br>

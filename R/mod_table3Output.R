@@ -85,7 +85,7 @@ mod_table3Output_server <- function(id,d){
                                    "Company of Person Responsible",
                                    "Date Added"
                       ),
-                      caption = paste0("Pre-WSA Wells Missing Info for Date Added Between ",
+                      caption = paste0("Table 3 - Pre-WSA Wells Missing Info for Date Added Between ",
                                        date_added_min, " and ", date_added_max,
                                        " and Well Tag Number Between ", wtn_min, " and ", wtn_max),
                       rownames = FALSE,

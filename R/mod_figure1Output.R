@@ -62,7 +62,7 @@ mod_figure1Output_server <- function(id,d){
       geom_bar(position =position_stack(reverse=TRUE), stat ="identity") + 
       scale_fill_tableau(palette="Tableau 20", drop = FALSE) + 
       #geom_text_repel(aes(label = n), size=3, position = position_stack(vjust =0.5, reverse = TRUE ), max.overlaps = Inf) +
-      theme_light() + 
+      theme_light(base_family = "Calibri") + 
       labs(
         title = "Figure 1 - Count of Intended Use for Water Supply Wells and Well Class for Non Water Supply Wells",
         subtitle = paste0("date added between ",

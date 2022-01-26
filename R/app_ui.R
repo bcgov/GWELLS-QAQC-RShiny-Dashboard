@@ -25,7 +25,8 @@ app_ui <- function(request) {
       ),
       hr(),
       navbarPage(
-        title = "text as wide as the logo", theme = "bcgov.css",
+        title = "text as wide as the logo", 
+        tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bcgov.css")), # theme  parameter no longer recommended for passing CSS file name https://shiny.rstudio.com/articles/css.html
         tabPanel(
           "Overview",
           
