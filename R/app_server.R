@@ -29,7 +29,7 @@ app_server <- function(input, output, session) {
     library(plotly)
   })
   # get the data from CSV (or SQL if this ever get implemented)
-  waiter_show(html = spin_fading_circles()) 
+  waiter_show(html = waiting_screen) 
   
   data_source <- "csv"
   
