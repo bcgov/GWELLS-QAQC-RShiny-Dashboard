@@ -1,9 +1,9 @@
 # GWELLS-QAQC-RShiny-Dashboard
 An R Shiny dashboard that automates filtering and prioritizing wells within the GWELLS database to automate data QAQC
 
+# Process map     
 
-
-# Process map    
+The data for this shiny comes from a CSV located in the GWELLS-QAQC_Geocode_ArchiveData repository located at https://github.com/bcgov/GWELLS-QAQC_Geocode_ArchiveData.  The CSV is updated nightly by a github action defined in that repo.  Here is the whole process generating the files.
 
 ![](inst/app/www/images/gwells.drawio.png)
 
@@ -21,7 +21,7 @@ rsconnect::deployApp(account = "bcgov-env")
 
 # BC Shiny Template  
 
-Downloaded here : https://github.com/bcgov/ensemble-app-CMIP5
+The CSS and code for the footer comes from https://github.com/bcgov/ensemble-app-CMIP5
 
 # File naming conventions   
 
@@ -50,8 +50,6 @@ The naming convention in golem is the following:
 Note that when building a module file with golem, you can also create fct_ and utils_ files that will hold functions and utilities for this specific module. For example, golem::add_module("01_import", fct = "readr", utils = "ui") will create R/mod_01_import.R, R/mod_01_import_fct_readr.R and R/mod_01_import_utils_ui.R.
 
 Of course, as with any convention, you might occasionally feel like deviating from the general pattern. Your app may not have that many functions, or maybe the functions can all fit into one utils_ file. But whether you have one or thousands of files, it is always a good practice to stick to a formalized pattern as much as possible.
-
-
 
 # Good shiny resources      
 
