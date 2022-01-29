@@ -85,3 +85,6 @@ Here are some interesting shiny books.
 
 * [Engineering Production-Grade Shiny Apps](https://engineering-shiny.org/) (2021) by Colin Fay & al
 * [Mastering Shiny](https://mastering-shiny.org/) (2020) by Hadley wickham
+
+# Credits / Blame   
+This repo was originally created by Simon Coulombe during a "Code With Us" opportunity in January 2022.
