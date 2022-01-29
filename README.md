@@ -9,6 +9,8 @@ The data for this shiny comes from a CSV located in the GWELLS-QAQC_Geocode_Arch
 
 ![](inst/app/www/images/gwells.drawio2.png)
 
+The `gwells.drawio` file located in the `inst/app/www/images/` is editable on the diagrams.net website.  To edit it, first download the gwells.drawio file to your computer  then do "File - Open From - Browser" on diagrams.net.  Once you are done, export it to png and replace the png image at `inst/app/www/images/gwells.drawio2.png`
+
 ### Installing the `gwellsshiny` package  
 
 ```r
