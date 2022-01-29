@@ -1,23 +1,43 @@
 # GWELLS-QAQC-RShiny-Dashboard
 An R Shiny dashboard that automates filtering and prioritizing wells within the GWELLS database to automate data QAQC
 
+It comes in the form of a package named `gwellsshiny`.
+
 # Process map     
 
 The data for this shiny comes from a CSV located in the GWELLS-QAQC_Geocode_ArchiveData repository located at https://github.com/bcgov/GWELLS-QAQC_Geocode_ArchiveData.  The CSV is updated nightly by a github action defined in that repo.  Here is the whole process generating the files.
 
 ![](inst/app/www/images/gwells.drawio.png)
 
-# Deploying    
+### Installing the `gwellsshiny` package  
 
-- clone the repo.  
-- run the following in R: 
+```r
+remotes::install_github("bcgov/GWELLS-QAQC-RShiny-Dashboard")
 ```
-devtools::build()   
-rsconnect::setAccountInfo(name='bcgov-env',
-                           token='TOKEN',
-                           secret='SECRET')
-rsconnect::deployApp(account = "bcgov-env")
-```
+
+### Running the app on your computer  
+
+ - Run `remotes::install_github("bcgov/GWELLS-QAQC-RShiny-Dashboard")`  
+ - Clone repository ("git clone git@github.com:bcgov/GWELLS-QAQC-RShiny-Dashboard.git")  
+ - Open the "gwells_shiny.Rproj" project in RStudio  
+ - (make desired changes)  
+ - run `devtools::load_all(".")`   (or press Ctrl-Alt-L)  
+ - run `run_app()`  
+
+### Deploying the app to shinyapps.io  
+
+ - Run `remotes::install_github("bcgov/GWELLS-QAQC-RShiny-Dashboard")`
+ - Clone repository
+ - Open the "gwells_shiny.Rproj" project in RStudio
+ - (make desired changes)   
+ - run `devtools::build()`
+ - run `rsconnect::setAccountInfo(
+     name='bcgov-env',  
+     token='TOKEN',  
+     secret='SECRET')`,  where  TOKEN and SECRET and the values found by login in to shinyapps.io with the bcgov-env user and navigating to the "Account - Tokens" in the sidebar on the left.    
+    
+ - run `rsconnect::deployApp(account = "bcgov-env")`  
+
 
 # BC Shiny Template  
 
@@ -25,7 +45,10 @@ The CSS and code for the footer comes from https://github.com/bcgov/ensemble-app
 
 # File naming conventions   
 
-[from engineering production-grade shiny](https://engineering-shiny.org/structuring-project.html#conventions-matter)
+This project was built as a R package using the {golem} approach described in the [engineering production-grade shiny apps](https://engineering-shiny.org/structuring-project.html#conventions-matter) book.  
+
+
+The rest of this section contains excepts from that book.  
 
 Using a convention allows everyone to know where to look when debugging, refactoring, or implementing new features. For example, if you follow golem’s convention (which is the one developed in this section), you will know immediately that a file starting with mod_ contains a module. If you take over a project, look in the R/ folder, and see files starting with these three letters, you will know immediately that these files contain modules.
 
@@ -50,8 +73,12 @@ The naming convention in golem is the following:
 Note that when building a module file with golem, you can also create fct_ and utils_ files that will hold functions and utilities for this specific module. For example, golem::add_module("01_import", fct = "readr", utils = "ui") will create R/mod_01_import.R, R/mod_01_import_fct_readr.R and R/mod_01_import_utils_ui.R.
 
 Of course, as with any convention, you might occasionally feel like deviating from the general pattern. Your app may not have that many functions, or maybe the functions can all fit into one utils_ file. But whether you have one or thousands of files, it is always a good practice to stick to a formalized pattern as much as possible.
+`
+
 
 # Good shiny resources      
+
+Here are some interesting shiny books.  
 
 * [Engineering Production-Grade Shiny Apps](https://engineering-shiny.org/) (2021) by Colin Fay & al
 * [Mastering Shiny](https://mastering-shiny.org/) (2020) by Hadley wickham

@@ -55,6 +55,7 @@ usethis::use_package( "RColorBrewer" ) # for qualitative palette on map
 usethis::use_package( "ggthemes" ) # for tableau 20 color palette
 usethis::use_package( "ggrepel" ) # for geom_text_repel
 usethis::use_package( "plotly" ) # for ggplotly()
+usethis::use_package( "rsconnect" ) # to deploy to shinyapps.io
 
 
 # devtools::install() ## simon 

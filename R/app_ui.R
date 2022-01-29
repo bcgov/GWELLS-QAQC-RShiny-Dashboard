@@ -9,7 +9,6 @@ app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
-    
     # fluidpage de exemple
     fluidPage(
       waiter::useWaiter(),
@@ -25,15 +24,13 @@ app_ui <- function(request) {
       ),
       hr(),
       navbarPage(
-        title = "text as wide as the logo", 
+        title = "bcgov gwells shiny App", 
         tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bcgov.css")), # theme  parameter no longer recommended for passing CSS file name https://shiny.rstudio.com/articles/css.html
         tabPanel(
           "Overview",
-          
           mainPanel(width = 12, helpText(HTML(helptext_overview()))),
           bc_template_footer
         ),   
-        
         tabPanel(
           "Summary Table",
           sidebarLayout(
@@ -47,11 +44,9 @@ app_ui <- function(request) {
           sidebarLayout(
             sidebarPanel(width = 3,helpText(HTML(helptext_post_wsa_wells()))),
             mainPanel(width = 9, mod_table1Output_ui("table1Output_ui_1"))
-            
           ),
           bc_template_footer
         ),
-        
         tabPanel(
           "Mislocated Wells",
           sidebarLayout(
@@ -81,7 +76,6 @@ app_ui <- function(request) {
           sidebarLayout(
             sidebarPanel(
               width = 3, helpText(HTML(helptext_map())),
-              
             ),
             mainPanel(width = 9, 
                       mod_map1Output_ui("map1Output_ui_1")
@@ -96,8 +90,7 @@ app_ui <- function(request) {
             mainPanel(width = 9, mod_figure1Output_ui("figure1Output_ui_1"))
           ),        
           bc_template_footer
-        ),    
-        
+        )   
       )
     )
   )
@@ -115,7 +108,6 @@ golem_add_external_resources <- function() {
   add_resource_path(
     "www", app_sys("app/www")
   )
-  
   tags$head(
     favicon(),
     bundle_resources(
