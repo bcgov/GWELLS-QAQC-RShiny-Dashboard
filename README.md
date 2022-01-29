@@ -30,6 +30,7 @@ remotes::install_github("bcgov/GWELLS-QAQC-RShiny-Dashboard")
  - Clone repository
  - Open the "gwells_shiny.Rproj" project in RStudio
  - (make desired changes)   
+ - git commit and push your changes
  - run `devtools::build()`
  - run `rsconnect::setAccountInfo(
      name='bcgov-env',  
