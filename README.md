@@ -5,7 +5,7 @@ It comes in the form of a package named `gwellsshiny` and is currently hosted at
 
 # Process map     
 
-The data for this shiny comes from 3 CSV files located in the GWELLS-QAQC_Geocode_ArchiveData repository located at https://github.com/bcgov/GWELLS-QAQC_Geocode_ArchiveData.  The CSVs are updated nightly by a github action defined in that repo.  Here is the whole process generating the files.
+The data for this shiny comes from 3 CSV files located in the GWELLS-QAQC_Geocode_ArchiveData repository located at https://github.com/bcgov/GWELLS-QAQC_Geocode_ArchiveData.  The CSVs are updated nightly by 3 github actions defined in that repo.  Here is the whole process generating the files.  The github actions are the blue boxes on that diagram.
 
 ![](inst/app/www/images/gwells.drawio2.png)
 
