@@ -1,7 +1,7 @@
 # GWELLS-QAQC-RShiny-Dashboard
 An R Shiny dashboard that automates filtering and prioritizing wells within the GWELLS database to automate data QAQC
 
-It comes in the form of a package named `gwellsshiny`.
+It comes in the form of a package named `gwellsshiny` and is currently hosted at https://bcgov-env.shinyapps.io/gwells-qaqc-rshiny-dashboard/
 
 # Process map     
 
