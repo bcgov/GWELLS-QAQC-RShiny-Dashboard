@@ -78,7 +78,7 @@ mod_table1Output_server <- function(id,d){
         dplyr::filter(table1_flag >0 ) %>%
         dplyr::arrange(dplyr::desc(table1_flag), dplyr::desc(well_tag_number)) %>%
         dplyr::select(
-          well_tag_number,table1_flag,  my_well_type, table1_missing_lat_long_flag, 
+          fct_nr_region_name, well_tag_number, table1_flag,  my_well_type, table1_missing_lat_long_flag, 
           table1_table1_missing__wdip_flag, table1_missing_finished_well_depth_flag, 
           table1_missing_person_responsible_flag, company_of_person_responsible, date_added) %>%
         mutate(
@@ -90,7 +90,8 @@ mod_table1Output_server <- function(id,d){
           )
         ) %>% 
         DT::datatable(
-          colnames = c("Well Tag Number",
+          colnames = c("Natural Resource Region",
+                        "Well Tag Number",
                        "Problem Count",
                        "Well Type",
                        "Lat Long",
