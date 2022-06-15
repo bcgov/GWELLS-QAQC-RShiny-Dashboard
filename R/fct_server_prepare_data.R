@@ -102,8 +102,8 @@ prepare_all_data <- function(full_data){
       ),
       table1_table1_missing__wdip_flag =  dplyr::case_when(
         is.na(my_well_type) | old_or_unknown_date ~ FALSE,
-        is.na(well_identification_plate_attached)  ~ TRUE,
-        !is.na(well_identification_plate_attached)  ~ FALSE
+        is.na(identification_plate_number)  ~ TRUE,
+        !is.na(identification_plate_number)  ~ FALSE
       ),
       table1_missing_finished_well_depth_flag =  dplyr::case_when(
         is.na(my_well_type) | old_or_unknown_date ~ FALSE,

@@ -80,7 +80,7 @@ mod_table1Output_server <- function(id,d){
         dplyr::select(
           fct_nr_region_name, well_tag_number, table1_flag,  my_well_type, table1_missing_lat_long_flag, 
           table1_table1_missing__wdip_flag, table1_missing_finished_well_depth_flag, 
-          table1_missing_person_responsible_flag, company_of_person_responsible, date_added) %>%
+          table1_missing_person_responsible_flag, company_of_person_responsible, worktype, date_added) %>%
         mutate(
           across(.cols = c("table1_missing_lat_long_flag", 
                            "table1_table1_missing__wdip_flag", 
@@ -99,6 +99,7 @@ mod_table1Output_server <- function(id,d){
                        "Well Depth",
                        "Person Responsible",
                        "Company of Person Responsible",
+                       "Work Type",
                        "Date Added"
           ),
           caption = paste0("Table 1 - Post-WSA Missing Info for Date Added Between ",
