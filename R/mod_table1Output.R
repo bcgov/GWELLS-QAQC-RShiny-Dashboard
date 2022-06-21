@@ -41,7 +41,7 @@ mod_table1OutputData_server <- function(id,d){
         dplyr::select(
           well_tag_number,table1_flag,  my_well_type, table1_missing_lat_long_flag, 
           table1_table1_missing__wdip_flag, table1_missing_finished_well_depth_flag, 
-          table1_missing_person_responsible_flag, company_of_person_responsible, date_added) %>%
+          table1_missing_person_responsible_flag, company_of_person_responsible, worktype, date_added) %>%
         mutate(
           across(.cols = c("table1_missing_lat_long_flag", 
                            "table1_table1_missing__wdip_flag", 

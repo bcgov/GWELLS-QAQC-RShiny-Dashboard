@@ -36,7 +36,7 @@ mod_table3OutputData_server <- function(id,d){
         arrange(desc(table3_flag), desc(well_tag_number)) %>%
         select(well_tag_number,table3_flag,  my_well_type, 
                table3_missing_lat_long_flag,table3_missing_finished_well_depth_flag,
-               company_of_person_responsible,date_added) %>%
+               company_of_person_responsible, worktype, date_added) %>%
         mutate(
           across(.cols = c("table3_missing_lat_long_flag", 
                            "table3_missing_finished_well_depth_flag"
@@ -68,7 +68,7 @@ mod_table3Output_server <- function(id,d){
         arrange(desc(table3_flag), desc(well_tag_number)) %>%
         select(fct_nr_region_name, well_tag_number, table3_flag,  my_well_type, 
                table3_missing_lat_long_flag,table3_missing_finished_well_depth_flag,
-               company_of_person_responsible,date_added) %>%
+               company_of_person_responsible, worktype, date_added) %>%
         mutate(
           across(.cols = c("table3_missing_lat_long_flag", 
                            "table3_missing_finished_well_depth_flag"
@@ -84,6 +84,7 @@ mod_table3Output_server <- function(id,d){
                                    "Lat Long",
                                    "Finished Well Depth",
                                    "Company of Person Responsible",
+                                   "Work Type",
                                    "Date Added"
                       ),
                       caption = paste0("Table 3 - Pre-WSA Wells Missing Info for Date Added Between ",
