@@ -82,8 +82,11 @@ mod_table2Output_server <- function(id,d){
                       rownames = FALSE,
                       escape = FALSE,
                       filter = "top",
-                      options= list(pageLength = 25, autoWidth = TRUE)
-        )
+                      options= list(pageLength = 25, autoWidth = TRUE, scrollY = "600px")
+        ) %>% 
+        DT::formatStyle('distance_geocode', fontWeight = DT::styleInterval(400, c('normal', 'bold'))) %>%
+        DT::formatStyle('distance_to_matching_pid', fontWeight = DT::styleInterval(25, c('normal', 'bold'))) %>%
+        DT::formatStyle('score_address', fontWeight = DT::styleInterval(80, c('bold', 'normal')))
     })
   })
 }

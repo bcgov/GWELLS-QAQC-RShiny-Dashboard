@@ -93,7 +93,7 @@ mod_table3Output_server <- function(id,d){
                       rownames = FALSE,
                       escape = FALSE,
                       filter = "top",
-                      options= list(pageLength = 25, autoWidth = TRUE)
+                      options= list(pageLength = 25, autoWidth = TRUE, scrollY = "600px")
         )
     })
   })

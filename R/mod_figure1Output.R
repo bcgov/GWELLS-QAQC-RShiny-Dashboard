@@ -68,9 +68,9 @@ mod_figure1Output_server <- function(id,d){
         subtitle = paste0("date added between ",
                           date_added_min, " and ", date_added_max,
                           " and well tag number between ", wtn_min, " and ", wtn_max),
-        x = "Well Class is Water Supply",
+        x = "",
         y = "Count",
-        fill = "Well class and Intended Use"
+        fill = "Well Class and Intended Use"
       )
     
     ggplotly(myplot)

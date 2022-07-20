@@ -28,6 +28,7 @@ app_server <- function(input, output, session) {
     library(ggrepel) # for geom_text_repel
     library(plotly)
   })
+  
   # get the data from CSV (or SQL if this ever get implemented)
   waiter_show(html = waiting_screen) 
   

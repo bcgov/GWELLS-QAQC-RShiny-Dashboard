@@ -1,10 +1,21 @@
+helptext_overview_load <- function(){
+  
+  "<h2>About</h1><br>
+  The purpose of this application is to assist Groundwater Data Specialists with their responsibilities pertaining to Quality Assurance/Quality Control (QA/QC) of groundwater data within the Province's groundwater well database (accessible through the 
+<a href='https://apps.nrs.gov.bc.ca/gwells/' style='color:lightblue'>GWELLS application</a>).<br>
+  The application uses publicly available records that are updated nightly.  This app was launched on December 13, 2021. All records that were in GWELLS prior to that date were assigned “Date Added” December 13, 2021. To view the full dataset set the date range to December 13, 2021 to present.<br>
+  The 'Download' button appears after the 'Generate Tables and Figures' button is pressed.<br>
+  If you have any questions about the content presented within this application please contact <a href='mailto:GWELLS@gov.bc.ca' style='color:lightblue'>GWELLS@gov.bc.ca</a>."
+  
+}
+
 helptext_overview <- function(){
   
   "<h2>About</h1><br>
   The purpose of this application is to assist Groundwater Data Specialists with their responsibilities pertaining to Quality Assurance/Quality Control (QA/QC) of groundwater data within the Province's groundwater well database (accessible through the 
 <a href='https://apps.nrs.gov.bc.ca/gwells/'>GWELLS application</a>).<br>
   The application uses publicly available records that are updated nightly.  This app was launched on December 13, 2021. All records that were in GWELLS prior to that date were assigned “Date Added” December 13, 2021. To view the full dataset set the date range to December 13, 2021 to present.<br>
-  The 'Download' button appears after the `Generate Tables and Figures` button is pressed.<br>
+  The 'Download' button appears after the 'Generate Tables and Figures' button is pressed.<br>
   If you have any questions about the content presented within this application please contact <a href='mailto:GWELLS@gov.bc.ca'>GWELLS@gov.bc.ca</a>."
   
 }
@@ -29,11 +40,12 @@ helptext_mislocated_wells <- function(){
   "Table 2 identifies wells that have high probability of incorrect location coordinates. The accuracy of the well location coordinates was evaluated by comparing them to the location description information using the <a href='https://www2.gov.bc.ca/gov/content/data/geographic-data-services/location-services/geocoder'>BC Address Geocoder API</a>.  The BC Address Geocoder API was used to generate the following location accuracy metrics: <br>
 <br>
 <ol>
-<li>      <b>Geocode Distance</b>: The distance from well to result of geocode (value 99999 indicates no result). Wells with Geocode distance of 400 m or greater are displayed in this table.</li>
+<li>      <b>Geocode Distance</b>: The distance from well to location determined by the BC Address Geocoder API (value 99999 indicates no result). Wells with Geocode distance of 400 m or greater are displayed in this table.</li>
 <li>    <b>Distance to matching PID</b>: The distance from well to BC Parcel Fabric Polygon with matching Parcel Identifier (PID).  A higher value indicates higher probability of a location error.  NULL indicates no matching PID found.  Wells with Distance to matching PID of 25 m or greater are displayed in this table. </li>
 <li>      <b>Score address</b>: Token Set Ratio score for matching wells address to reverse geocoded address (street number/name/direction). A lower score indicates a higher probability of a location error. Wells with Address Scores less than 80 are displayed in this table.</li>
 <li>      <b>Score city</b>: Token Set Ratio score for matching wells city to reverse geocoded locality. A lower score indicates a higher probability of a location error. This table is not filtered by City Score.  </li>
-</ol>  
+</ol>
+<p><b>The bolded field(s) indicates the parameter(s) of issue for a given well.  </b></p>
 <p>The Token Set Ratio is a metric with values between 0 and 100 that's determined by matching the address or city text strings using Fuzzy String Matching. Work Type refers to well construction, alteration, or decommissioning as identified by the work dates. No date indicates that no work dates are available for any type of work. The wells displayed in the table meet the above criteria and were added to GWELLS between the specified date range and have a WTN within the user specified range.</p>
 "
 }
@@ -56,7 +68,7 @@ REMEDIATE  = Remediation<br>
 INJECTION  = Injection<br>
 RECHARGE   = Recharge<br>
 <br>
-<b>Intended Well Use Codes for Water Supply Class Wells</b><br>
+<b>Intended Well Use Codes for Water Supply Wells</b><br>
 DOM        = Private Domestic<br>
 UNK_USE    = Unknown Use<br>
 DWS        = Water Supply System <br>
@@ -66,7 +78,6 @@ OTHER      = Other<br>
 TST        = Test<br>
 OBS        = Observation Well<br>
 OP_LP_GEO  = Open Loop Geoexchange<br>
-Non-Water Supply = N/A not a Water Supply Well<br>
 "
 }
 
@@ -101,7 +112,7 @@ REMEDIATE  = Remediation<br>
 INJECTION  = Injection<br>
 RECHARGE   = Recharge<br>
 <br>
-<b>Intended Well Use Codes for Water Supply Class Wells</b><br>
+<b>Intended Well Use Codes for Water Supply Wells</b><br>
 DOM        = Private Domestic<br>
 UNK_USE    = Unknown Use<br>
 DWS        = Water Supply System <br>
@@ -111,6 +122,5 @@ OTHER      = Other<br>
 TST        = Test<br>
 OBS        = Observation Well<br>
 OP_LP_GEO  = Open Loop Geoexchange<br>
-Non-Water Supply = N/A not a Water Supply Well<br>
 "
 }
