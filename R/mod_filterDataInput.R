@@ -85,6 +85,21 @@ mod_filterDataInput_server <- function(id,df){
   })
 }
 
+mod_filterDataInputDrillers_server <- function(id,df){
+  stopifnot(!is.reactive(df)) # z ne doit pas être reactif, c'est le data de gwells.
+  moduleServer( id, function(input, output, session){
+    message("run  mod_filterDataInputDrillers_server")
+    ns <- session$ns
+    eventReactive(input$generate,{
+      list(
+        df = df
+      )
+    })
+  })
+}
+
+
+
 ## To be copied in the UI
 # mod_filterDataInput_ui("filterDataInput_ui_1")#
 

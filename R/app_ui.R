@@ -15,7 +15,8 @@ app_ui <- function(request) {
       tags$style(".glyphicon-ok-sign {color:#2b8ee5}
               .glyphicon-question-sign {color:#f4e107}
               .glyphicon-exclamation-sign {color:#e5413b}
-              .glyphicon-flag, .glyphicon-trash {color:#28b728}"),
+              .glyphicon-flag, .glyphicon-trash {color:#28b728}
+                 .dropdown-menu {color:#fff}"),
       fluidRow(
         column(3, mod_filterDataInputGenerate_ui("filterDataInput_ui_1")), 
         column(3, mod_downloadFileOutput_ui("downloadFileOutput_ui_1")), 
@@ -90,7 +91,15 @@ app_ui <- function(request) {
             mainPanel(width = 9, mod_figure1Output_ui("figure1Output_ui_1"))
           ),        
           bc_template_footer
-        )   
+        ),
+        tabPanel(
+          "Drillers",
+          sidebarLayout(
+            sidebarPanel(width = 2, helpText(HTML(helptext_drillers()))),
+            mainPanel(width = 10, mod_drillersTableOutput_ui("drillersTableOutput_ui_1"))
+          ),        
+          bc_template_footer
+        )  
       )
     )
   )

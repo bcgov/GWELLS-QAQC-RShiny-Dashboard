@@ -23,7 +23,7 @@ mod_downloadFileOutput_ui <- function(id){
 #' downloadFileOutput Server Functions
 #'
 #' @noRd 
-mod_downloadFileOutput_server <- function(id,table1, table2, table3){
+mod_downloadFileOutput_server <- function(id,table1, table2, table3, table4){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -38,8 +38,18 @@ mod_downloadFileOutput_server <- function(id,table1, table2, table3){
         write.csv(table1(), "table1_post_wsa_wells.csv", row.names = FALSE)
         write.csv(table2(), "table2_mislocated_wells.csv", row.names = FALSE)
         write.csv(table3(), "table3_pre_wsa_wells.csv", row.names = FALSE)
+        out_xlsx <- createWorkbook()
+        
+        for (region in unique(table4()$fct_nr_region_name)) {
+          df <- table4() %>% filter(fct_nr_region_name == region)
+          print(df)
+          addWorksheet(out_xlsx, region)
+          writeData(out_xlsx, sheet = region, x = df)
+        }
+        
+        saveWorkbook(out_xlsx, "table4_drillers.xlsx", overwrite=TRUE)
         #create the zip file
-        zip(file,c("table1_post_wsa_wells.csv", "table2_mislocated_wells.csv", "table3_pre_wsa_wells.csv"))
+        zip(file,c("table1_post_wsa_wells.csv", "table2_mislocated_wells.csv", "table3_pre_wsa_wells.csv", "table4_drillers.xlsx"))
       }
     )
     

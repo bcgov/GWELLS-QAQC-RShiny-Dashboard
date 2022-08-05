@@ -5,6 +5,7 @@
 #' @import shiny
 #' @noRd
 app_server <- function(input, output, session) {
+  print(input)
   Sys.setenv(TZ="America/Vancouver")
   suppressPackageStartupMessages({
     library(shiny)
@@ -27,6 +28,8 @@ app_server <- function(input, output, session) {
     library(ggthemes)#  for tableau 20 palette
     library(ggrepel) # for geom_text_repel
     library(plotly)
+    library(shinyjs)
+    library(openxlsx)
   })
   
   # get the data from CSV (or SQL if this ever get implemented)
@@ -65,6 +68,8 @@ app_server <- function(input, output, session) {
   
   # the gwells data is filtered according to whatever filters the user select 
   data <- mod_filterDataInput_server("filterDataInput_ui_1",prepared_gwells)
+  data_drill <- mod_filterDataInputDrillers_server("filterDataInput_ui_1",prepared_gwells)
+  
   
   mod_table1Output_server("table1Output_ui_1", d = data)
   mod_table2Output_server("table2Output_ui_1", d = data)
@@ -73,13 +78,15 @@ app_server <- function(input, output, session) {
   mod_map1Output_server("map1Output_ui_1", d = data)
   mod_summaryTableRegionOutput_server("summaryTableRegionOutput_ui_1", d = data)
   mod_summaryTable1Output_server("summaryTable1Output_ui_1", d = data)
+  mod_drillersTableOutput_server("drillersTableOutput_ui_1", d = data_drill)
 
   
   # extract the data that is used for the table 1-2-3 so that we can feed them to the download module
   table1Data <- reactive({mod_table1OutputData_server("table1Output_ui_1", d = data)})
   table2Data <- reactive({mod_table2OutputData_server("table2Output_ui_1", d = data)})
-  table3Data <- reactive({mod_table3OutputData_server("table3Output_ui_1", d = data)})  
+  table3Data <- reactive({mod_table3OutputData_server("table3Output_ui_1", d = data)})
+  drillerData <- reactive({mod_drillersTableOutputData_server("drillersTableOutput_ui_1", d = data_drill)})
   
   #define download button content
-  mod_downloadFileOutput_server("downloadFileOutput_ui_1", table1= table1Data, table2 = table2Data, table3 = table3Data)
+  mod_downloadFileOutput_server("downloadFileOutput_ui_1", table1= table1Data, table2 = table2Data, table3 = table3Data, table4=drillerData)
   }
