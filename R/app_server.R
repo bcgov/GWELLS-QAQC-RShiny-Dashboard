@@ -28,7 +28,6 @@ app_server <- function(input, output, session) {
     library(ggthemes)#  for tableau 20 palette
     library(ggrepel) # for geom_text_repel
     library(plotly)
-    library(shinyjs)
     library(openxlsx)
   })
   
