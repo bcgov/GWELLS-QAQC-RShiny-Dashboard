@@ -56,7 +56,7 @@ usethis::use_package( "ggthemes" ) # for tableau 20 color palette
 usethis::use_package( "ggrepel" ) # for geom_text_repel
 usethis::use_package( "plotly" ) # for ggplotly()
 usethis::use_package( "rsconnect" ) # to deploy to shinyapps.io
-
+usethis::use_package( "openxlsx" )
 
 # devtools::install() ## simon 
 # renv::snapshot(type = "explicit") # simon
