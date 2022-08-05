@@ -26,6 +26,7 @@ Imports:
     leaflet,
     lubridate,
     mapview,
+    openxlsx,
     pkgload,
     plotly,
     pool,
