@@ -127,6 +127,6 @@ OP_LP_GEO  = Open Loop Geoexchange<br>
 
 helptext_drillers <- function(){
   "This table shows the count of wells submitted to GWELLS by Company and Person Responsible. The date range for this table
-  is 2016-03-01 to the present day. The 'Date Added' and 'Well Tag Number' range selectors do not affect the data displayed in 
+  is 2016-03-01 to when the data was last updated (data is updated nightly). The 'Date Added' and 'Well Tag Number' range selectors do not affect the data displayed in 
   this table."
 }

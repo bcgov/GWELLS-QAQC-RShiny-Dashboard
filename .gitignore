@@ -6,3 +6,4 @@
 .Renviron
 *.html
 *.csv
+.gwells-qaqc-rshiny-dashboard.dcf
