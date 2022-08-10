@@ -88,6 +88,4 @@ app_server <- function(input, output, session) {
   
   #define download button content
   mod_downloadFileOutput_server("downloadFileOutput_ui_1", table1= table1Data, table2 = table2Data, table3 = table3Data, table4=drillerData)
-
-  mod_downloadFileOutput_xlsx_server("downloadFileOutput_ui_2", table1= table1Data, table2 = table2Data, table3 = table3Data)
-}
+  }
