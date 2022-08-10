@@ -42,7 +42,6 @@ mod_downloadFileOutput_server <- function(id,table1, table2, table3, table4){
         
         for (region in unique(table4()$fct_nr_region_name)) {
           df <- table4() %>% filter(fct_nr_region_name == region)
-          print(df)
           addWorksheet(out_xlsx, region)
           writeData(out_xlsx, sheet = region, x = df)
         }
