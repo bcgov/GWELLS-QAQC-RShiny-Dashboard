@@ -87,5 +87,6 @@ app_server <- function(input, output, session) {
   drillerData <- reactive({mod_drillersTableOutputData_server("drillersTableOutput_ui_1", d = data_drill)})
   
   #define download button content
-  mod_downloadFileOutput_server("downloadFileOutput_ui_1", table1= table1Data, table2 = table2Data, table3 = table3Data, table4=drillerData)
+  mod_downloadFileOutput_server("downloadFileOutput_ui_1", table1= table1Data, table2 = table2Data, table3 = table3Data)
+  mod_downloadFileOutputDrillers_server("downloadFileOutputDrillers_ui_1", drillerstable = drillerData)
   }

@@ -18,10 +18,11 @@ app_ui <- function(request) {
               .glyphicon-flag, .glyphicon-trash {color:#28b728}
                  .dropdown-menu {color:#fff}"),
       fluidRow(
-        column(3, mod_filterDataInputGenerate_ui("filterDataInput_ui_1")), 
-        column(3, mod_downloadFileOutput_ui("downloadFileOutput_ui_1")), 
-        column(3, mod_filterDataInputWTN_ui("filterDataInput_ui_1")),
-        column(3, mod_filterDataInputDate_ui("filterDataInput_ui_1"))
+        column(2, mod_filterDataInputGenerate_ui("filterDataInput_ui_1")), 
+        column(2, mod_downloadFileOutput_ui("downloadFileOutput_ui_1")),
+        column(2, mod_downloadFileOutputDrillers_ui("downloadFileOutputDrillers_ui_1")),
+        column(2, mod_filterDataInputWTN_ui("filterDataInput_ui_1")),
+        column(2, mod_filterDataInputDate_ui("filterDataInput_ui_1"))
       ),
       hr(),
       navbarPage(
