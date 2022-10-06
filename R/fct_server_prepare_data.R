@@ -101,9 +101,10 @@ prepare_all_data <- function(full_data){
         !is.na(latitude_decdeg) | is.na(longitude_decdeg) ~ FALSE
       ),
       table1_table1_missing__wdip_flag =  dplyr::case_when(
+        well_class_code == "CLS_LP_GEO" ~ FALSE,
         is.na(my_well_type) | old_or_unknown_date ~ FALSE,
         is.na(identification_plate_number)  ~ TRUE,
-        !is.na(identification_plate_number)  ~ FALSE
+        !is.na(identification_plate_number)  ~ FALSE,
       ),
       table1_missing_finished_well_depth_flag =  dplyr::case_when(
         is.na(my_well_type) | old_or_unknown_date ~ FALSE,
