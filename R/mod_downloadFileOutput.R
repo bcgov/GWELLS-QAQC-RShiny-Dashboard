@@ -72,6 +72,15 @@ mod_downloadFileOutputDrillers_server <- function(id, drillerstable){
         on.exit(setwd(owd))
         out_xlsx <- createWorkbook()
         
+        #add worksheet with all rows for those that want to see all entries per company/person
+        df_all <- drillerstable() %>% 
+          select(-fct_nr_region_name) %>%
+          group_by(company_of_person_responsible, person_responsible) %>% 
+          summarise(across(everything(), sum))
+        
+        addWorksheet(out_xlsx, "All Regions")
+        writeData(out_xlsx, sheet = "All Regions", x = df_all)
+        
         for (region in unique(drillerstable()$fct_nr_region_name)) {
           df <- drillerstable() %>% filter(fct_nr_region_name == region)
           addWorksheet(out_xlsx, region)
